@@ -33,12 +33,41 @@ cp linux-amd64/helm /usr/local/bin/helm
 ### Using Repo
 TODO
 ```bash
-helm add repo ...
-helm search ...
-helm inspect ...
+helm add repo emc-mongoose https://emc-mongoose.github.io/helm/
 ```
+To check chart:
+```bash
+$ helm search mongoose
+
+NAME                            CHART VERSION   APP VERSION     DESCRIPTION
+emc-mongoose/mongoose-pravega   0.0.1-beta      4.2.11          Mongoose is a horizontally scalable and configu...
+```
+To get more information:
+```bash
+$ helm inspect chart mongoose-pravega
+
+apiVersion: v1
+appVersion: 4.2.11
+description: Mongoose is a horizontally scalable and configurable performance testing
+  utility. This chart contains Mongoose with Praga Storage Driver.
+home: https://github.com/emc-mongoose/mongoose-storage-driver-pravega
+icon: https://avatars0.githubusercontent.com/u/12926680
+maintainers:
+- name: Dell EMC
+  url: http://dellemc.com
+name: mongoose-pravega
+version: 0.0.1-beta
+```
+To install chart (run with kubectl):
+```bash
+helm install --name mongoose-pravega 
+```
+
+
 ### Manual installation
-TODO
+
+It is also possible to install a chart from source.
+
 ### Parametrisation
 TODO
 ```
@@ -51,3 +80,4 @@ helm install --name mongoose-pravega mongoose-base/kuberenetes/charts/mongoose-p
 ##### List of all params
 
 TODO
+
