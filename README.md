@@ -28,12 +28,19 @@ Get the latest tarball from https://github.com/helm/helm/releases
 wget https://storage.googleapis.com/kubernetes-helm/helm-v2.14.0-linux-amd64.tar.gz
 tar -xzf helm-*
 cp linux-amd64/helm /usr/local/bin/helm
+helm init
 ```
 
 ### Using Repo
-TODO
+
+To install a chart, you can run the helm `install` command. Helm has several ways to find and install a chart, but the easiest is to use one of the chart registry.
+
+By default helm use `stable/` repo with url: `https://kubernetes-charts.storage.googleapis.com`
+
+Adding our repo:
+
 ```bash
-helm add repo emc-mongoose https://emc-mongoose.github.io/helm/
+helm repo add emc-mongoose https://emc-mongoose.github.io/helm/
 ```
 To check chart:
 ```bash
@@ -60,7 +67,7 @@ version: 0.0.1-beta
 ```
 To install chart (create pod):
 ```bash
-helm install [pod-name] mongoose-pravega [args]
+helm install emc-mongoose/mongoose-pravega [args]
 ```
 
 ### Manual installation
@@ -70,6 +77,14 @@ It is also possible to install a chart from source.
 ```bash
 git clone https://github.com/emc-mongoose/helm.git
 helm install [pod-name] helm/mongoose-pravega
+```
+
+### Remove release
+
+It is **strongly recommended** to remove the releases with the help of helm. If the release was installed with command `helm install` and will be removed with `kubectl`, it can lead to unexpected behavior.
+
+```bash
+helm uninstall mongoose-pravega
 ```
 
 ### Parametrisation
