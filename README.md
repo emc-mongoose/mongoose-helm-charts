@@ -58,15 +58,19 @@ maintainers:
 name: mongoose-pravega
 version: 0.0.1-beta
 ```
-To install chart (run with kubectl):
+To install chart (create pod):
 ```bash
-helm install --name mongoose-pravega 
+helm install [pod-name] mongoose-pravega [args]
 ```
-
 
 ### Manual installation
 
 It is also possible to install a chart from source.
+
+```bash
+git clone https://github.com/emc-mongoose/helm.git
+helm install [pod-name] helm/mongoose-pravega
+```
 
 ### Parametrisation
 TODO
