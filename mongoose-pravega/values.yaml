@@ -1,0 +1,36 @@
+# Default values for demo-chart.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+stepLimitFailCount: 0
+load:
+  concurrencyLimit: 10
+  itemDataSize: "1KB-10KB"
+  netTimeout: 250000
+
+storage:
+  namespace: "scope1"
+  net:
+    node:
+      addrs:
+        - 127.0.0.1
+
+# Number of driver replicas to deploy
+replicas: 2
+
+# Since mongoose version 4 there is one image for controller and for peer (driver) nodes
+# The mongoose image configuration
+image:
+  name: emcmongoose/mongoose-storage-driver-pravega
+  tag: 4.2.11
+  pullPolicy: IfNotPresent
+
+resources:
+  limits:
+    cpu: "4"
+    memory: "4Gi"
+  requests:
+    cpu: "4"
+    memory: "4Gi"
+
+

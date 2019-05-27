@@ -1,0 +1,14 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: {{ .Chart.Name }}
+spec:
+  containers:
+    - name: mongoose-container
+      image: "{{ .Values.image.name }}:{{ .Values.image.tag }}"
+      imagePullPolicy: {{ .Values.image.pullPolicy }}
+      args: ["--storage-net-node-addrs={{ .Values.storage.net.node.addrs }}",
+             "--storage-namespace={{ .Values.storage.namespace }}",
+             "--storage-driver-limit-concurrency={{ .Values.load.concurrencyLimit }}",
+             "--item-data-size={{ .Values.load.itemDataSize }}"]
+  restartPolicy: OnFailure
