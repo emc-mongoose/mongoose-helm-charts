@@ -22,7 +22,7 @@ replicas: 2
 # The mongoose image configuration
 image:
   name: emcmongoose/mongoose-storage-driver-pravega
-  tag: 4.2.11
+  tag: "latest"
   pullPolicy: IfNotPresent
 
 resources:
