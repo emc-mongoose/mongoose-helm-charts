@@ -100,3 +100,15 @@ helm install --name mongoose-pravega mongoose-base/kuberenetes/charts/mongoose-p
 
 TODO
 
+# Contributing
+TODO
+1) change version
+```bash
+cd helm/
+helm package mongoose-pravega/
+cd ..
+helm repo index helm/ --url https://emc-mongoose.github.io/helm/
+helm repo add emc-mongoose https://emc-mongoose.github.io/helm/ or helm repo update
+helm install mmm emc-mongoose/mongoose-pravega
+```
+
