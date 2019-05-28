@@ -40,7 +40,7 @@ By default helm use `stable/` repo with url: `https://kubernetes-charts.storage.
 Adding our repo:
 
 ```bash
-helm repo add emc-mongoose https://emc-mongoose.github.io/helm/
+helm repo add emc-mongoose https://emc-mongoose.github.io/mongoose-helm-charts/
 ```
 To check chart:
 ```bash
@@ -75,7 +75,7 @@ helm install emc-mongoose/mongoose-pravega [args]
 It is also possible to install a chart from source.
 
 ```bash
-git clone https://github.com/emc-mongoose/helm.git
+git clone https://github.com/emc-mongoose/mongoose-helm-charts.git
 helm install [pod-name] helm/mongoose-pravega
 ```
 
@@ -104,11 +104,12 @@ TODO
 TODO
 1) change version
 ```bash
-cd helm/
+cd mongoose-helm-charts/
 helm package mongoose-pravega/
 cd ..
-helm repo index helm/ --url https://emc-mongoose.github.io/helm/
-helm repo add emc-mongoose https://emc-mongoose.github.io/helm/ or helm repo update
+helm repo index helm/ --url https://emc-mongoose.github.io/mongoose-helm-charts/
+# helm repo add emc-mongoose https://emc-mongoose.github.io/mongoose-helm-charts/ 
+helm repo update
 helm install mmm emc-mongoose/mongoose-pravega
 ```
 
