@@ -3,10 +3,10 @@ entries:
   mongoose-pravega:
   - apiVersion: v1
     appVersion: 4.2.11
-    created: "2019-05-27T19:00:16.1917537+03:00"
+    created: "2019-05-28T16:13:31.5008311+03:00"
     description: Mongoose is a horizontally scalable and configurable performance
       testing utility. This chart contains Mongoose with Praga Storage Driver.
-    digest: 1f518a0059b8965cc662645ad88647f728e94e4679be0ef963015571f6c0715c
+    digest: 9eee5d2f9459e251bf087c6861339977edf8dad4647835a79a0fffcdae186482
     home: https://github.com/emc-mongoose/mongoose-storage-driver-pravega
     icon: https://avatars0.githubusercontent.com/u/12926680
     maintainers:
@@ -14,6 +14,6 @@ entries:
       url: http://dellemc.com
     name: mongoose-pravega
     urls:
-    - https://emc-mongoose.github.io/helm/mongoose-pravega-0.0.1-beta.tgz
-    version: 0.0.1-beta
-generated: "2019-05-27T19:00:16.1863902+03:00"
+    - https://emc-mongoose.github.io/helm/mongoose-pravega-0.1.0.tgz
+    version: 0.1.0
+generated: "2019-05-28T16:13:31.4968647+03:00"

@@ -28,6 +28,7 @@ Get the latest tarball from https://github.com/helm/helm/releases
 wget https://storage.googleapis.com/kubernetes-helm/helm-v2.14.0-linux-amd64.tar.gz
 tar -xzf helm-*
 cp linux-amd64/helm /usr/local/bin/helm
+helm init
 ```
 
 ### Using Repo
