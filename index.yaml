@@ -3,7 +3,7 @@ entries:
   mongoose:
   - apiVersion: v1
     appVersion: 4.2.11
-    created: "2019-05-30T00:06:44.3477542+03:00"
+    created: "2019-05-30T00:17:10.0856143+03:00"
     description: Mongoose is a horizontally scalable and configurable performance
       testing utility.
     digest: ff3a41c45512cada10871d328545f8fef8ce007e8a7bdf6400f391d591cda505
@@ -15,7 +15,7 @@ entries:
   mongoose-pravega:
   - apiVersion: v1
     appVersion: 4.2.11
-    created: "2019-05-30T00:06:44.3509042+03:00"
+    created: "2019-05-30T00:17:10.0876143+03:00"
     description: Mongoose is a horizontally scalable and configurable performance
       testing utility. This chart contains Mongoose with Praga Storage Driver.
     digest: 6cdcda7bbb4c30924532c672051700ac2a05cb8b3a254b8ae1baeeadbb4cb43e
@@ -24,4 +24,4 @@ entries:
     urls:
     - https://emc-mongoose.github.io/mongoose-helm-charts/mongoose-pravega-0.1.0.tgz
     version: 0.1.0
-generated: "2019-05-30T00:06:44.3426637+03:00"
+generated: "2019-05-30T00:17:10.0833289+03:00"
