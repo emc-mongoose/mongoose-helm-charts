@@ -122,6 +122,7 @@ Update the projects depending on the Mongoose's API (storage drivers, etc)
 1) change version
 ```bash
 cd mongoose-helm-charts/
+git checkout -b gh-pages origin/gh-pages
 helm package mongoose-pravega/
 cd ..
 helm repo index mongoose-helm-charts/ --url https://emc-mongoose.github.io/mongoose-helm-charts/
