@@ -106,40 +106,30 @@ helm install --name mongoose-pravega mongoose-base/kuberenetes/charts/mongoose-p
 
 TODO
 
-# Contributing & Releasing
+# Releasing
 
 >Note: `master` branch is used to store charts code, and `gh-pages` branch as charts repository.
 
-Ensure all tests are OK
-Ensure the new version documentation is ready
-Share the testing build with QE and repeat this step until the qualification is OK
-Create/replace the corresponding VCS tags:
-git tag -d latest
-git push origin :refs/tags/latest
-git tag -a latest -m <X>.<Y>.<Z>
-git push --tags --force
-Merge to the release branch (optional)
-Wait until the released artifacts appear on Central Maven repo (few tens of minutes usually)
-Update the projects depending on the Mongoose's API (storage drivers, etc)
-1) change version
+1) Ensure that the `version: <X.Y.Z>` is changed in `Chart.yaml` 
+2) Ensure the new version documentation is ready
+3) Merge to the `master` branch
+4) Publish new release in to helm repo (`gh-pages` branch):
 ```bash
-cd mongoose-helm-charts/
-git checkout -b gh-pages origin/gh-pages
-helm package mongoose-pravega/
-cd ..
-helm repo index mongoose-helm-charts/ --url https://emc-mongoose.github.io/mongoose-helm-charts/
-# helm repo add emc-mongoose https://emc-mongoose.github.io/mongoose-helm-charts/ 
-helm repo update
-helm install emc-mongoose/mongoose-pravega
-
-
-cd mongoose-helm-charts/
-helm package $CHART_PATH/ # to build the tgz file and copy it here
+cd $PATH_TO_REPO/mongoose-helm-charts/
+helm package $CHART_PATH/ # to build the .tgz file and copy it here
+git stash -u # save untracked .tgz file
+git checkout gh-pages
+git stash pop
 helm repo index . --url https://emc-mongoose.github.io/mongoose-helm-charts/ # create or update the index.yaml for repo
-git add .
+git add index.yaml *.tgz
 git commit -m 'New chart version'
 git push
-# helm repo add emc-mongoose https://emc-mongoose.github.io/mongoose-helm-charts/ 
-helm repo update
-```
 
+# helm repo add $REPO_NAME https://emc-mongoose.github.io/mongoose-helm-charts/ 
+helm repo update
+helm install $REPO_NAME/$CHART_NAME
+```
+>For example: 
+>* REPO_NAME=emc-mongoose
+>* CHART_NAME=mongoose-pravega
+>* CHART_PATH=$CHART_NAME/
