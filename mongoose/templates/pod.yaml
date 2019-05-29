@@ -7,8 +7,9 @@ spec:
     - image: "{{ .Values.image.name }}:{{ .Values.image.tag }}"
       imagePullPolicy: {{ .Values.image.pullPolicy }}
       name: mongoose-container
-      args:
-        - --load-step-limit-time=1m
-          --storage-driver-type=dummy-mock
-          --load-step-node-addrs=mongoose-node-0.mongoose-node,mongoose-node-1.mongoose-node,mongoose-node-2.mongoose-node
+      args: [
+          "--load-step-limit-time=1m",
+          "--storage-driver-type=dummy-mock",
+          "--load-step-node-addrs=mongoose-node-0.mongoose-node,mongoose-node-1.mongoose-node,mongoose-node-2.mongoose-node"
+          ]
   restartPolicy: OnFailure
