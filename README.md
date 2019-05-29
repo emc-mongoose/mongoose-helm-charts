@@ -22,6 +22,7 @@ Below are the steps to deploy a mongoose-storage-driver-pravega on kubernetes us
 
 >Note: since helm is a kubernetes package manager, kubectl tool must first be installed on the current maschine and a k8s cluster deployed.
 
+Сlient installation.
 Get the latest tarball from https://github.com/helm/helm/releases
 
 ```bash
@@ -30,7 +31,7 @@ tar -xzf helm-*
 sudo mv linux-amd64/helm /usr/local/bin/
 ```
 Next command will install Tiller in the cluster. 
->Note: Accordingly, the machine must be switched to the cluster context (see command `kubectl config use-context [cluster-name]` ). Otherwise, you may get errors.
+>Note: Tiller is installed by default in the kubectl context cluster. Accordingly, the machine must be switched to the cluster context (see command `kubectl config use-context [cluster-name]` ). Otherwise, you may get errors.
 ```bash
 helm init
 ```
@@ -105,8 +106,19 @@ helm install --name mongoose-pravega mongoose-base/kuberenetes/charts/mongoose-p
 
 TODO
 
-# Contributing
-TODO
+# Contributing & Releasing
+
+Ensure all tests are OK
+Ensure the new version documentation is ready
+Share the testing build with QE and repeat this step until the qualification is OK
+Create/replace the corresponding VCS tags:
+git tag -d latest
+git push origin :refs/tags/latest
+git tag -a latest -m <X>.<Y>.<Z>
+git push --tags --force
+Merge to the release branch (optional)
+Wait until the released artifacts appear on Central Maven repo (few tens of minutes usually)
+Update the projects depending on the Mongoose's API (storage drivers, etc)
 1) change version
 ```bash
 cd mongoose-helm-charts/
