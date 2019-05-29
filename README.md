@@ -55,21 +55,21 @@ emc-mongoose/mongoose-pravega   0.1.0           4.2.11          Mongoose is a ho
 ```
 To get more information:
 ```bash
-$ helm inspect chart mongoose-pravega
+$ helm inspect chart emc-mongoose/mongoose-pravega
 
 apiVersion: v1
 appVersion: 4.2.11
 description: Mongoose is a horizontally scalable and configurable performance testing
   utility. This chart contains Mongoose with Praga Storage Driver.
 home: https://github.com/emc-mongoose/mongoose-storage-driver-pravega
-icon: https://avatars0.githubusercontent.com/u/12926680
-maintainers:
-- name: Dell EMC
-  url: http://dellemc.com
 name: mongoose-pravega
-version: 0.0.1-beta
+version: 0.1.0
 ```
-To install chart (create pod):
+To install chart (create kubernetes object defined in a chart):
+```bash
+helm install --name [chart-name] emc-mongoose/mongoose-pravega [args]
+```
+or with random chart name
 ```bash
 helm install emc-mongoose/mongoose-pravega [args]
 ```
@@ -80,15 +80,16 @@ It is also possible to install a chart from source.
 
 ```bash
 git clone https://github.com/emc-mongoose/mongoose-helm-charts.git
-helm install [pod-name] helm/mongoose-pravega
+helm install --name [chart-name] mongoose-helm-charts/mongoose-pravega
 ```
 
 ### Remove release
 
-It is **strongly recommended** to remove the releases with the help of helm. If the release was installed with command `helm install` and will be removed with `kubectl`, it can lead to unexpected behavior.
+>Note: It is **strongly recommended** to remove the releases with the help of helm. If the release was installed with command `helm install` and will be removed with `kubectl`, it can lead to unexpected behavior.
 
 ```bash
-helm uninstall mongoose-pravega
+helm uninstall [chart-name]
+helm del --purge [chart-name]
 ```
 
 ### Parametrisation
@@ -114,6 +115,6 @@ cd ..
 helm repo index mongoose-helm-charts/ --url https://emc-mongoose.github.io/mongoose-helm-charts/
 # helm repo add emc-mongoose https://emc-mongoose.github.io/mongoose-helm-charts/ 
 helm repo update
-helm install mmm emc-mongoose/mongoose-pravega
+helm install emc-mongoose/mongoose-pravega
 ```
 
