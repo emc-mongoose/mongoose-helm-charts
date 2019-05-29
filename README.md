@@ -108,6 +108,8 @@ TODO
 
 # Contributing & Releasing
 
+>Note: `master` branch is used to store charts code, and `gh-pages` branch as charts repository.
+
 Ensure all tests are OK
 Ensure the new version documentation is ready
 Share the testing build with QE and repeat this step until the qualification is OK
@@ -129,5 +131,15 @@ helm repo index mongoose-helm-charts/ --url https://emc-mongoose.github.io/mongo
 # helm repo add emc-mongoose https://emc-mongoose.github.io/mongoose-helm-charts/ 
 helm repo update
 helm install emc-mongoose/mongoose-pravega
+
+
+cd mongoose-helm-charts/
+helm package $CHART_PATH/ # to build the tgz file and copy it here
+helm repo index . --url https://emc-mongoose.github.io/mongoose-helm-charts/ # create or update the index.yaml for repo
+git add .
+git commit -m 'New chart version'
+git push
+# helm repo add emc-mongoose https://emc-mongoose.github.io/mongoose-helm-charts/ 
+helm repo update
 ```
 
