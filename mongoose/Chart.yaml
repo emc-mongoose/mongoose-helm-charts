@@ -1,6 +1,0 @@
-apiVersion: v1
-appVersion: "4.2.11"
-description: Mongoose is a horizontally scalable and configurable performance testing utility.
-name: mongoose
-version: 0.1.0
-home: https://github.com/emc-mongoose/mongoose
