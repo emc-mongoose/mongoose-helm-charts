@@ -111,7 +111,7 @@ TODO
 cd mongoose-helm-charts/
 helm package mongoose-pravega/
 cd ..
-helm repo index helm/ --url https://emc-mongoose.github.io/mongoose-helm-charts/
+helm repo index mongoose-helm-charts/ --url https://emc-mongoose.github.io/mongoose-helm-charts/
 # helm repo add emc-mongoose https://emc-mongoose.github.io/mongoose-helm-charts/ 
 helm repo update
 helm install mmm emc-mongoose/mongoose-pravega
