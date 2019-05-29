@@ -27,7 +27,11 @@ Get the latest tarball from https://github.com/helm/helm/releases
 ```bash
 wget https://storage.googleapis.com/kubernetes-helm/helm-v2.14.0-linux-amd64.tar.gz
 tar -xzf helm-*
-cp linux-amd64/helm /usr/local/bin/helm
+sudo mv linux-amd64/helm /usr/local/bin/
+```
+Next command will install Tiller in the cluster. 
+>Note: Accordingly, the machine must be switched to the cluster context (see command `kubectl config use-context [cluster-name]` ). Otherwise, you may get errors.
+```bash
 helm init
 ```
 
@@ -47,7 +51,7 @@ To check chart:
 $ helm search mongoose
 
 NAME                            CHART VERSION   APP VERSION     DESCRIPTION
-emc-mongoose/mongoose-pravega   0.0.1-beta      4.2.11          Mongoose is a horizontally scalable and configu...
+emc-mongoose/mongoose-pravega   0.1.0           4.2.11          Mongoose is a horizontally scalable and configurable perf...
 ```
 To get more information:
 ```bash
