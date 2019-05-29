@@ -89,7 +89,6 @@ helm install --name [chart-name] mongoose-helm-charts/mongoose-pravega
 >Note: It is **strongly recommended** to remove the releases with the help of helm. If the release was installed with command `helm install` and will be removed with `kubectl`, it can lead to unexpected behavior.
 
 ```bash
-helm uninstall [chart-name]
 helm del --purge [chart-name]
 ```
 
