@@ -12,6 +12,9 @@ image:
   tag: "latest"
   pullPolicy: IfNotPresent
 
+service:
+  name: mongoose-node
+
 resources:
   limits:
     cpu: "4"

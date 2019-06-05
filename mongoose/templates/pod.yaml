@@ -10,6 +10,6 @@ spec:
       args: [
           "--load-step-limit-time=1m",
           "--storage-driver-type={{ .Values.storage.driver.type }}",
-          "--load-step-node-addrs=mongoose-node-0.mongoose-node,mongoose-node-1.mongoose-node,mongoose-node-2.mongoose-node"
+          "--load-step-node-addrs={{ .Valuse.service.name }}-0.mongoose-node,mongoose-node-1.mongoose-node,mongoose-node-2.mongoose-node"
           ]
   restartPolicy: OnFailure
