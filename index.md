@@ -1,11 +1,5 @@
-### Using Repo
 
-To install a chart, you can run the helm `install` command. Helm has several ways to find and install a chart, but the easiest is to use one of the chart registry.
+See all the documentation on https://github.com/emc-mongoose/mongoose-helm-charts/tree/master
 
-By default helm use `stable/` repo with url: `https://kubernetes-charts.storage.googleapis.com`
-
-Adding our repo:
-
-```bash
-helm repo add emc-mongoose https://emc-mongoose.github.io/mongoose-helm-charts/
-```
+List of charts:
+    - [mongoose-0.1.1.tgz](mongoose-0.1.1.tgz)
