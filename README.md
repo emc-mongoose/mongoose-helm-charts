@@ -156,6 +156,7 @@ args: ""
 
 >Note: `master` branch is used to store charts code, and `gh-pages` branch as charts repository.
 
+0) Ensure that all changes were committed and pushed
 1) Ensure that the `version: <X.Y.Z>` is changed in `Chart.yaml` 
 2) Ensure the new version documentation is ready
 3) Merge to the `master` branch
