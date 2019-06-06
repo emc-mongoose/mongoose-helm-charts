@@ -52,36 +52,36 @@ To check chart:
 $ helm search mongoose
 
 NAME                            CHART VERSION   APP VERSION     DESCRIPTION
-emc-mongoose/mongoose-pravega   0.1.0           4.2.11          Mongoose is a horizontally scalable and configurable perf...
+emc-mongoose/mongoose   0.1.0           4.2.11          Mongoose is a horizontally scalable and configurable perf...
 ```
 To get more information:
 ```bash
-$ helm inspect chart emc-mongoose/mongoose-pravega
+$ helm inspect chart emc-mongoose/mongoose
 
 apiVersion: v1
 appVersion: 4.2.11
 description: Mongoose is a horizontally scalable and configurable performance testing
-  utility. This chart contains Mongoose with Praga Storage Driver.
+  utility.
 home: https://github.com/emc-mongoose/mongoose-storage-driver-pravega
-name: mongoose-pravega
+name: mongoose
 version: 0.1.0
 ```
 To install chart (create kubernetes object defined in a chart):
 ```bash
-helm install --name [chart-name] emc-mongoose/mongoose-pravega [args]
+helm install --name [chart-name] emc-mongoose/mongoose [args]
 ```
 or with random chart name
 ```bash
-helm install emc-mongoose/mongoose-pravega [args]
+helm install emc-mongoose/mongoose [args]
 ```
 
-### Manual installation
+### Manual installation (good for tests)
 
 It is also possible to install a chart from source.
 
 ```bash
 git clone https://github.com/emc-mongoose/mongoose-helm-charts.git
-helm install --name [chart-name] mongoose-helm-charts/mongoose-pravega
+helm install --name [chart-name] mongoose-helm-charts/mongoose
 ```
 
 ### Remove release
@@ -93,17 +93,64 @@ helm del --purge [chart-name]
 ```
 
 ### Parametrisation
-TODO
-```
-helm delete --purge mongoose-pravega
-kubectl logs mongoose-pravega
-helm install --name mongoose-pravega mongoose-base/kuberenetes/charts/mongoose-pravega/
-helm install --name mongoose-pravega mongoose-base/kuberenetes/charts/mongoose-pravega/ --set "load.concurrencyLimit=5"
+
+#### Custom image
+By default the chart uses the `mongoose-base` image. To specify a custom image, use the following parameters:
+
+```bash
+helm install --name mongoose emc-mongoose/mongoose \
+             --set image.name=emcmongoose/mongoose-pravega-driver
 ```
 
-##### List of all params
+#### CLI arguments
 
-TODO
+**TODO**
+
+```bash
+helm install --name mongoose emc-mongoose/mongoose \
+             --set args=[--load-step-limit-time=60s,--storage-driver-limit-concurrency=5]
+```
+
+#### List of all params
+
+**TODO**
+```bash
+$ helm inspect values emc-mongoose/mongoose
+```
+As a result, a `values.yaml` is displayed, each of whose parameters can be overridden with `--set <key1.key2.<...>.keyn>=<value>` command.
+```bash
+# Default values for demo-chart.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# Number of driver replicas to deploy
+replicas: 3
+
+# Since mongoose version 4 there is one image for controller and for peer (driver) nodes
+# The mongoose image configuration
+image:
+  name: emcmongoose/mongoose-base
+  tag: "latest"
+  pullPolicy: IfNotPresent
+
+service:
+  name: mongoose-node
+
+resources:
+  limits:
+    cpu: "4"
+    memory: "4Gi"
+  requests:
+    cpu: "4"
+    memory: "4Gi"
+
+#####################
+# Mongoose CLI args #
+#####################
+args: ""
+
+```
+
 
 # Releasing
 
@@ -130,5 +177,5 @@ helm install $REPO_NAME/$CHART_NAME
 ```
 >For example: 
 >* REPO_NAME=emc-mongoose
->* CHART_NAME=mongoose-pravega
+>* CHART_NAME=mongoose
 >* CHART_PATH=$CHART_NAME/
