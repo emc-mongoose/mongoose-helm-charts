@@ -99,7 +99,7 @@ By default the chart uses the `mongoose-base` image. To specify a custom image, 
 
 ```bash
 helm install --name mongoose emc-mongoose/mongoose \
-             --set image.name=emcmongoose/mongoose-pravega-driver
+             --set image.name=emcmongoose/mongoose-storage-driver-pravega
 ```
 
 #### CLI arguments
