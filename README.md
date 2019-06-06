@@ -151,6 +151,11 @@ args: ""
 
 ```
 
+### Distributed mode
+
+As can be seen from the `replicas` parameter, Mongoose by default run in distributed mode.
+
+TODO
 
 # Releasing
 
