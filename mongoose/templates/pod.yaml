@@ -8,4 +8,5 @@ spec:
       imagePullPolicy: {{ .Values.image.pullPolicy }}
       name: mongoose-container
       args: {{ .Values.args }}
+
   restartPolicy: OnFailure

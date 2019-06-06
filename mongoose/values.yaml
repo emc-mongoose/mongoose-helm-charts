@@ -26,4 +26,4 @@ resources:
 #####################
 # Mongoose CLI args #
 #####################
-args: []
+args: ["--load-step-node-addrs=mongoose-node-0.mongoose-node,mongoose-node-1.mongoose-node,mongoose-node-2.mongoose-node"]
