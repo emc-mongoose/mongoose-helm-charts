@@ -108,7 +108,13 @@ helm install --name mongoose emc-mongoose/mongoose \
 
 ```bash
 helm install --name mongoose emc-mongoose/mongoose \
-             --set args=[--load-step-limit-time=60s,--storage-driver-limit-concurrency=5]
+             --set "args=[\"--load-step-limit-time=60s\"\,\"--storage-driver-limit-concurrency=5\"]"
+```
+
+```bash
+helm install --name mongoose ../mongoose-helm-charts/mongoose/ \
+             --set image.name=emcmongoose/mongoose-storage-driver-pravega \
+             --set "args=[\"--storage-net-node-addrs=<IP>\"\,\"--storage-namespace=scope1\"]"
 ```
 
 #### List of all params
