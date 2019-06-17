@@ -26,7 +26,4 @@ resources:
 #####################
 # Mongoose CLI args #
 #####################
-#args: ["--load-step-node-addrs=mongoose-node-0.mongoose-node,mongoose-node-1.mongoose-node,mongoose-node-2.mongoose-node"]
-args: ["--load-step-node-addrs=mongoose-node-0.mongoose-node,mongoose-node-1.mongoose-node,mongoose-node-2.mongoose-node"]
-#  - "--load-step-limit-time=20s"
-#  - "--storage-driver-type=dummy-mock"
+args: ""
