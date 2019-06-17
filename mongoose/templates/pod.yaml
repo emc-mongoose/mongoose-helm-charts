@@ -8,8 +8,8 @@ spec:
       imagePullPolicy: {{ .Values.image.pullPolicy }}
       name: mongoose-container
       args: {{ printf "[\"--load-step-node-addrs=" }}
-            {{- range $mongocount, $e := until (.Values.replicas|int) -}}
-              {{- printf "%s-%d.%s" $.Values.service.name $mongocount $.Values.service.name -}}
+            {{- range $index, $e := until (.Values.replicas|int) -}}
+              {{- printf "%s-%d.%s" $.Values.service.name $index $.Values.service.name -}}
               {{ if ne (add $e 1) ($.Values.replicas|int) }}
                 {{- printf "," -}}
               {{ end }}
