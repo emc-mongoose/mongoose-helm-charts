@@ -3,13 +3,13 @@ entries:
   mongoose:
   - apiVersion: v1
     appVersion: 4.2.11
-    created: "2019-06-17T22:57:13.8714369+03:00"
+    created: "2019-06-17T23:02:16.2185401+03:00"
     description: Mongoose is a horizontally scalable and configurable performance
       testing utility.
-    digest: 3c770cbcc42ea95b0f8d6fb446b8c6a8b7b993dcbd4badd28f087de0fdd1c8a7
+    digest: d78797c52bce881b39aa4756eada31191bbbbcd880fd4cab76e31d250be2fd31
     home: https://github.com/emc-mongoose/mongoose
     name: mongoose
     urls:
-    - https://emc-mongoose.github.io/mongoose-helm-charts/mongoose-0.1.1.tgz
-    version: 0.1.1
-generated: "2019-06-17T22:57:13.8679997+03:00"
+    - https://emc-mongoose.github.io/mongoose-helm-charts/mongoose-0.1.0.tgz
+    version: 0.1.0
+generated: "2019-06-17T23:02:16.2157604+03:00"
