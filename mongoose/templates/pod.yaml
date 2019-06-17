@@ -7,7 +7,7 @@ spec:
     - image: "{{ .Values.image.name }}:{{ .Values.image.tag }}"
       imagePullPolicy: {{ .Values.image.pullPolicy }}
       name: mongoose-container
-      args: {{ printf "[\"--load-step-node-addrs=" }}
+      args: {{- printf " [\"--load-step-node-addrs=" -}}
             {{- range $index, $e := until (.Values.replicas|int) -}}
               {{- printf "%s-%d.%s" $.Values.service.name $index $.Values.service.name -}}
               {{ if ne (add $e 1) ($.Values.replicas|int) }}
