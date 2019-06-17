@@ -159,8 +159,12 @@ args: ""
 
 ### Distributed mode
 
-As can be seen from the `replicas` parameter, Mongoose by default run in distributed mode.
+As can be seen from the `replicas` parameter, Mongoose by default run in distributed mode with count of node = "3".
 
+To change count of Mongoose node use parametr `--set "replicas=<int>"`
+```
+helm install --name mongoose mongoose/ --debug --set "args=\"--load-step-limit-time=10s\"" --set "replicas=4"
+```
 TODO
 
 # Releasing
