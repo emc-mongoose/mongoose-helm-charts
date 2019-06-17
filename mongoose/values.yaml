@@ -9,7 +9,7 @@ replicas: 3
 # The mongoose image configuration
 image:
   name: emcmongoose/mongoose-base
-  tag: "latest"
+  tag: "4.2.11"
   pullPolicy: IfNotPresent
 
 service:
@@ -26,4 +26,7 @@ resources:
 #####################
 # Mongoose CLI args #
 #####################
+#args: ["--load-step-node-addrs=mongoose-node-0.mongoose-node,mongoose-node-1.mongoose-node,mongoose-node-2.mongoose-node"]
 args: ["--load-step-node-addrs=mongoose-node-0.mongoose-node,mongoose-node-1.mongoose-node,mongoose-node-2.mongoose-node"]
+#  - "--load-step-limit-time=20s"
+#  - "--storage-driver-type=dummy-mock"

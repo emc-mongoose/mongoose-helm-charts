@@ -7,6 +7,18 @@ spec:
     - image: "{{ .Values.image.name }}:{{ .Values.image.tag }}"
       imagePullPolicy: {{ .Values.image.pullPolicy }}
       name: mongoose-container
-      args: {{ .Values.args }}
+      args: {{ printf "[\"--load-step-addrs=" }}
+            {{- range $mongocount, $e := until (.Values.replicas|int) -}}
+                 {{- printf "%s-%d.%s" $.Values.service.name $mongocount $.Values.service.name -}}
+                 {{ if ne (add $e 1) ($.Values.replicas|int) }}
+                       {{- printf "," -}}
+                 {{ end }}
+            {{- end -}}
+            {{- printf "\"" -}}
+            {{ if ne $.Values.args "" }}
+                {{- printf "," }}
+                {{ .Values.args -}}
+            {{ end }}
+            {{- printf "]" }}
 
   restartPolicy: OnFailure
