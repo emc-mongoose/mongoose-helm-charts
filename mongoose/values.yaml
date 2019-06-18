@@ -1,12 +1,17 @@
-# Default values for demo-chart.
-# This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
 
-# Number of driver replicas to deploy
+########################################################
+#### Default values for demo-chart.
+#### This is a YAML-formatted file.
+#### Declare variables to be passed into your templates.
+########################################################
+
+#### Number of driver replicas to deploy
+
 replicas: 3
 
-# Since mongoose version 4 there is one image for controller and for peer (driver) nodes
-# The mongoose image configuration
+#### Since mongoose version 4 there is one image for controller and for peer (driver) nodes
+#### The mongoose image configuration
+
 image:
   name: emcmongoose/mongoose-base
   tag: "latest"
@@ -23,7 +28,8 @@ resources:
     cpu: "4"
     memory: "4Gi"
 
-#####################
-# Mongoose CLI args #
-#####################
+
+################## Mongoose CLI args ##################
+
 args: ""
+
