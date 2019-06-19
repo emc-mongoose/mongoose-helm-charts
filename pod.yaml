@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: tmp
+spec:
+  containers:
+    - name: tmp-container
+      image: radial/busyboxplus:curl
+      command:
+        - 'sh'
+        - '-c'
+        - 'curl -v -X POST  -H "Content-Type:multipart/form-data" -F "defaults={load:{step:{limit:{time: 10s}}}};type=application/yaml" http://mongoose-node-0.mongoose-node:9999/run'
+
+  restartPolicy: OnFailure
