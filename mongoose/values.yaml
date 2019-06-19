@@ -5,9 +5,9 @@
 #### Declare variables to be passed into your templates.
 ########################################################
 
-#### Number of driver replicas to deploy
+#### Number of Mongoose replicas to deploy
 
-replicas: 3
+replicas: 1
 
 #### Since mongoose version 4 there is one image for controller and for peer (driver) nodes
 #### The mongoose image configuration
