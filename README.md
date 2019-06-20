@@ -15,6 +15,8 @@ One of the ways to deploy an application on kubernetes is to use helm.
 
 `charts` - packages
 
+`release` - instance of chart
+
 Below are the steps to deploy a mongoose-storage-driver-pravega on kubernetes using the chart.
 
 ## Steps to deploy
@@ -52,36 +54,41 @@ To check chart:
 $ helm search mongoose
 
 NAME                            CHART VERSION   APP VERSION     DESCRIPTION
-emc-mongoose/mongoose   0.1.0           4.2.11          Mongoose is a horizontally scalable and configurable perf...
+emc-mongoose/mongoose   0.1.1           4.2.12          Mongoose is a horizontally scalable and configurable perf...
 ```
 To get more information:
 ```bash
 $ helm inspect chart emc-mongoose/mongoose
 
 apiVersion: v1
-appVersion: 4.2.11
+appVersion: 4.2.12
 description: Mongoose is a horizontally scalable and configurable performance testing
   utility.
 home: https://github.com/emc-mongoose/mongoose-storage-driver-pravega
 name: mongoose
-version: 0.1.0
+version: 0.1.1
 ```
 To install chart (create kubernetes object defined in a chart):
 ```bash
-helm install --name [chart-name] emc-mongoose/mongoose [args]
+helm install --name [release-name] emc-mongoose/mongoose [args]
 ```
-or with random chart name
+or with random name
 ```bash
 helm install emc-mongoose/mongoose [args]
 ```
-
+and you can see list of releases with command:
+```bash
+$ helm list
+NAME            REVISION        UPDATED                         STATUS          CHART                           APP VERSION     NAMESPACE
+mongoose        1               Thu Jun 20 13:25:50 2019        DEPLOYED        mongoose-0.1.1                  4.2.12          default
+```
 ### Manual installation (good for tests)
 
 It is also possible to install a chart from source.
 
 ```bash
 git clone https://github.com/emc-mongoose/mongoose-helm-charts.git
-helm install --name [chart-name] mongoose-helm-charts/mongoose
+helm install --name [release-name] mongoose-helm-charts/mongoose
 ```
 
 ### Remove release
@@ -89,7 +96,7 @@ helm install --name [chart-name] mongoose-helm-charts/mongoose
 >Note: It is **strongly recommended** to remove the releases with the help of helm. If the release was installed with command `helm install` and will be removed with `kubectl`, it can lead to unexpected behavior.
 
 ```bash
-helm del --purge [chart-name]
+helm del --purge [release-name]
 ```
 
 ### Parametrisation
@@ -101,39 +108,49 @@ By default the chart uses the `mongoose-base` image. To specify a custom image, 
 helm install --name mongoose emc-mongoose/mongoose \
              --set image.name=emcmongoose/mongoose-storage-driver-pravega
 ```
+where `emcmongoose/mongoose-storage-driver-pravega` - name of docker image
 
 #### CLI arguments
 
-**TODO**
+To set mongoose CLI arguments use helm argument `--set args=...`:
 
 ```bash
-helm install --name mongoose emc-mongoose/mongoose \
-             --set "args=[\"--load-step-limit-time=60s\"\,\"--storage-driver-limit-concurrency=5\"]"
+helm install --name mongoose \
+             emc-mongoose/mongoose \
+             --set "args=\"--storage-driver-limit-concurrency=5\"\,\"--load-step-limit-time=60s\"" 
 ```
 
+Example with custom image:
+
 ```bash
-helm install --name mongoose ../mongoose-helm-charts/mongoose/ \
-             --set image.name=emcmongoose/mongoose-storage-driver-pravega \
-             --set "args=[\"--storage-net-node-addrs=<IP>\"\,\"--storage-namespace=scope1\"]"
+helm install --name mongoose \
+             emc-mongoose/mongoose \
+             --set "args=\"--storage-net-node-addrs=<x.y.z.j>\"\,\"--storage-namespace=scope4\"\,\"--load-step-limit-time=10s\"" \
+             --set "image.name=emcmongoose/mongoose-storage-driver-pravega" 
 ```
 
 #### List of all params
 
-**TODO**
+To get list of all chart parameters:
+
 ```bash
 $ helm inspect values emc-mongoose/mongoose
 ```
-As a result, a `values.yaml` is displayed, each of whose parameters can be overridden with `--set <key1.key2.<...>.keyn>=<value>` command.
+As a result, a `values.yaml` is displayed, each of whose parameters can be overridden with `--set <key1.key2.<...>.keyN>=<value>` command.
 ```bash
-# Default values for demo-chart.
-# This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
+########################################################
+#### Default values for demo-chart.
+#### This is a YAML-formatted file.
+#### Declare variables to be passed into your templates.
+########################################################
 
-# Number of driver replicas to deploy
-replicas: 3
+#### Number of Mongoose replicas to deploy
 
-# Since mongoose version 4 there is one image for controller and for peer (driver) nodes
-# The mongoose image configuration
+replicas: 1
+
+#### Since mongoose version 4 there is one image for controller and for peer (driver) nodes
+#### The mongoose image configuration
+
 image:
   name: emcmongoose/mongoose-base
   tag: "latest"
@@ -150,22 +167,37 @@ resources:
     cpu: "4"
     memory: "4Gi"
 
-#####################
-# Mongoose CLI args #
-#####################
-args: ""
 
+################## Mongoose CLI args ##################
+
+args: ""
 ```
 
 ### Distributed mode
 
-As can be seen from the `replicas` parameter, Mongoose by default run in distributed mode with count of node = "3".
+As can be seen from the `replicas` parameter, Mongoose by default run in standalone mode with count of node = "1".
 
 To change count of Mongoose node use parametr `--set "replicas=<int>"`
 ```
-helm install --name mongoose mongoose/ --debug --set "args=\"--load-step-limit-time=10s\"" --set "replicas=4"
+helm install --name mongoose emc-mongoose/mongoose --set "replicas=4"
 ```
-TODO
+Let's see the list of pods
+```
+NAME                                                 READY   STATUS      RESTARTS   AGE
+mongoose                                             0/1     Completed   0          11s
+mongoose-node-0                                      1/1     Running     0          11s
+mongoose-node-1                                      1/1     Running     0          11s
+mongoose-node-2                                      1/1     Running     0          11s
+```
+It was created pod `mongoose` - this is entry node, and `mongoose-node-<>` - additional nodes.
+
+# Debuging
+
+```bash
+helm template --debug mongoose-helm-charts/mongoose ...
+```
+
+See more in the helm docs.
 
 # Releasing
 
@@ -178,11 +210,11 @@ TODO
 4) Publish new release in to helm repo (`gh-pages` branch):
 ```bash
 cd $PATH_TO_REPO/mongoose-helm-charts/
-helm package $CHART_PATH/ # to build the .tgz file and copy it here
-git stash -u # save untracked .tgz file
+helm package $CHART_PATH/               # to build the .tgz file and copy it here
+git stash -u                            # save untracked .tgz file
 git checkout gh-pages
 git stash pop
-helm repo index . --url https://emc-mongoose.github.io/mongoose-helm-charts/ # create or update the index.yaml for repo
+helm repo index . --url https://emc-mongoose.github.io/mongoose-helm-charts/        # create or update the index.yaml for repo
 git add index.yaml *.tgz
 git commit -m 'New chart version'
 git push
