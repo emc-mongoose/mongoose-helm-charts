@@ -3,7 +3,12 @@ kind: StatefulSet
 metadata:
   name: {{ .Values.service.name }}
 spec:
-  replicas: {{ add .Values.replicas -1 }}
+  {{- $count := ((add ($.Values.replicas|int) -1)|int) -}}
+  {{ if lt $count 1}}
+  replicas: 0
+  {{ else }}
+  replicas: {{ $count }}
+  {{ end }}
   selector:
     matchLabels:
       name: {{ .Values.service.name }}

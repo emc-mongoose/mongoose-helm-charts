@@ -7,9 +7,11 @@ spec:
     - image: "{{ .Values.image.name }}:{{ .Values.image.tag }}"
       imagePullPolicy: {{ .Values.image.pullPolicy }}
       name: mongoose-container
-      args: {{- $count := ((add ($.Values.replicas|int) -1)|int) -}}
-            {{- if ne 0 $count -}}
-              {{- printf " [\"--load-step-node-addrs=" -}}
+      args: {{- printf " [" -}}
+
+            {{- $count := ((add ($.Values.replicas|int) -1)|int) -}}
+            {{- if gt $count 0 -}}
+              {{- printf "\"--load-step-node-addrs=" -}}
               {{- range $index, $e := until $count -}}
                 {{- printf "%s-%d.%s" $.Values.service.name $index $.Values.service.name -}}
                 {{ if ne (add $e 1) $count }}
@@ -18,12 +20,14 @@ spec:
               {{- end -}}
               {{- printf "\"" -}}
             {{- end -}}
+
             {{ if ne $.Values.args "" }}
-              {{- if ne 0 $count -}}
+              {{- if gt $count 0 -}}
                 {{- printf "," }}
               {{ end }}
               {{- .Values.args -}}
             {{ end }}
+
             {{- printf "]" }}
 
   restartPolicy: OnFailure
