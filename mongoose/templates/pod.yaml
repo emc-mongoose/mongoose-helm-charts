@@ -3,6 +3,10 @@ kind: Pod
 metadata:
   name: {{ .Chart.Name }}
 spec:
+  initContainers:
+  - name: wait-for-services
+    image: busybox:1.28
+    command: ['sh', '-c', 'sleep 10']
   containers:
     - image: "{{ .Values.image.name }}:{{ .Values.image.tag }}"
       imagePullPolicy: {{ .Values.image.pullPolicy }}
