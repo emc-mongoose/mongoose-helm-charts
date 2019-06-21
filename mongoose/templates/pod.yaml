@@ -6,32 +6,36 @@ spec:
   initContainers:
   - name: wait-for-services
     image: busybox:1.28
-    command: ['sh', '-c', 'sleep 10']
+    command: ['sh',
+              '-c',
+              '{{ template "mongoose.makeShellCommand" . }}'
+             ]
   containers:
     - image: "{{ .Values.image.name }}:{{ .Values.image.tag }}"
       imagePullPolicy: {{ .Values.image.pullPolicy }}
       name: mongoose-container
       args: {{- printf " [" -}}
-
-            {{- $count := ((add ($.Values.replicas|int) -1)|int) -}}
-            {{- if gt $count 0 -}}
+                  
+            {{- $nodeCount := ((add (.Values.replicas|int) -1)|int) -}}
+            {{- if gt $nodeCount 0 -}}
               {{- printf "\"--load-step-node-addrs=" -}}
-              {{- range $index, $e := until $count -}}
+              {{- range $index, $e := until $nodeCount -}}
                 {{- printf "%s-%d.%s" $.Values.service.name $index $.Values.service.name -}}
-                {{ if ne (add $e 1) $count }}
+                {{ if ne (add $e 1) $nodeCount }}
                   {{- printf "," -}}
                 {{ end }}
               {{- end -}}
               {{- printf "\"" -}}
             {{- end -}}
 
-            {{ if ne $.Values.args "" }}
-              {{- if gt $count 0 -}}
+            
+            {{ if (ne $.Values.args "") and (ne $.Values.args nil) }}
+              {{- if gt $nodeCount 0 -}}
                 {{- printf "," }}
               {{ end }}
               {{- .Values.args -}}
             {{ end }}
-
+            
             {{- printf "]" }}
 
   restartPolicy: OnFailure

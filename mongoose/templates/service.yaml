@@ -5,10 +5,13 @@ metadata:
   labels:
     app: {{ .Values.service.name }}
 spec:
-  clusterIP: "None"
+  type: LoadBalancer
   ports:
     - name: data
       port: 1099
       targetPort: 1099
+    - name: http
+      port: 9999
+      targetPort: 9999
   selector:
     name: {{ .Values.service.name }}

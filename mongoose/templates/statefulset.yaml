@@ -3,7 +3,7 @@ kind: StatefulSet
 metadata:
   name: {{ .Values.service.name }}
 spec:
-  {{- $count := ((add ($.Values.replicas|int) -1)|int) -}}
+  {{- $count := ((add (.Values.replicas|int) -1)|int) -}}
   {{ if lt $count 1}}
   replicas: 0
   {{ else }}
@@ -35,3 +35,4 @@ spec:
           args: ["--run-node"]
           ports:
             - containerPort: 1099
+            - containerPort: 9999

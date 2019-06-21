@@ -1,45 +1,17 @@
-{{/* vim: set filetype=mustache: */}}
-{{/*
-Expand the name of the chart.
+-----------------------------------------
+Generate shell command for initContainers
+-----------------------------------------
 */}}
-{{- define "demo-chart.name" -}}
-{{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
-{{- end -}}
-
-{{/*
-Create a default fully qualified app name.
-We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
-If release name contains chart name it will be used as a full name.
-*/}}
-{{- define "demo-chart.fullname" -}}
-{{- if .Values.fullnameOverride -}}
-{{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" -}}
-{{- else -}}
-{{- $name := default .Chart.Name .Values.nameOverride -}}
-{{- if contains $name .Release.Name -}}
-{{- .Release.Name | trunc 63 | trimSuffix "-" -}}
-{{- else -}}
-{{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
-{{- end -}}
-{{- end -}}
-{{- end -}}
-
-{{/*
-Create chart name and version as used by the chart label.
-*/}}
-{{- define "demo-chart.chart" -}}
-{{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
-{{- end -}}
-
-{{/*
-Common labels
-*/}}
-{{- define "demo-chart.labels" -}}
-app.kubernetes.io/name: {{ include "demo-chart.name" . }}
-helm.sh/chart: {{ include "demo-chart.chart" . }}
-app.kubernetes.io/instance: {{ .Release.Name }}
-{{- if .Chart.AppVersion }}
-app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+{{- define "mongoose.makeShellCommand" -}}
+{{- $nodeCount := ((add (.Values.replicas|int) -1)|int) -}}
+{{- if gt $nodeCount 0 -}}
+    {{- range $index, $e := until $nodeCount -}}
+        {{- printf "\n\t\t" -}}
+        {{- printf `while [ $( curl -s -o /dev/null -w "%{http_code}" ` -}}
+        {{- printf "http://%s-%d.%s:%d/config" $.Values.service.name $index $.Values.service.name 9999 -}}
+        {{- printf ") -ne 200]; do sleep 3; done;" -}}
+    {{- end -}}
+{{- else }}
+    {{- print " " }}
 {{- end }}
-app.kubernetes.io/managed-by: {{ .Release.Service }}
-{{- end -}}
+{{- end }}
