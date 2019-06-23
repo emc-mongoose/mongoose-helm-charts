@@ -1,0 +1,33 @@
+
+########################################################
+#### Default values for chart.
+########################################################
+
+#### Number of Mongoose nodes to deploy
+
+replicas: 1
+
+#### Since mongoose version 4 there is one image for controller and for peer (driver) nodes
+#### The mongoose image configuration
+
+image:
+  name: emcmongoose/mongoose-base
+  tag: "latest"
+  pullPolicy: IfNotPresent
+
+service:
+  name: mongoose-node
+
+resources:
+  limits:
+    cpu: "4"
+    memory: "4Gi"
+  requests:
+    cpu: "4"
+    memory: "4Gi"
+
+
+################## Mongoose CLI args ##################
+
+args: ""
+
