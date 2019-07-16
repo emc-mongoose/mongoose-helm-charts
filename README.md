@@ -1,3 +1,23 @@
+Table of Contents
+=================
+
+   * [Deploying Mongoose with Helm](#deploying-mongoose-with-helm)
+      * [About Helm](#about-helm)
+            * [Basic terms:](#basic-terms)
+      * [Steps to deploy](#steps-to-deploy)
+         * [Install Helm](#install-helm)
+         * [Using Repo](#using-repo)
+         * [Manual installation (good for tests)](#manual-installation-good-for-tests)
+         * [Remove release](#remove-release)
+         * [Parametrisation](#parametrisation)
+            * [Custom image](#custom-image)
+            * [CLI arguments](#cli-arguments)
+            * [List of all params](#list-of-all-params)
+         * [Distributed mode](#distributed-mode)
+   * [Debuging](#debuging)
+   * [Releasing](#releasing)
+
+
 # Deploying Mongoose with Helm
 
 Mongoose can be deployed in a kubernetes cluster. Deploy description can be found in the [documentation on the mongoose-base repository](https://github.com/emc-mongoose/mongoose-base/tree/master/doc/deployment#kubernetes).
