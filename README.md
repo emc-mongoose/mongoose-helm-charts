@@ -17,7 +17,6 @@ Table of Contents
    * [Debuging](#debuging)
    * [Releasing](#releasing)
 
-
 # Deploying Mongoose with Helm
 
 Mongoose can be deployed in a kubernetes cluster. Deploy description can be found in the [documentation on the mongoose-base repository](https://github.com/emc-mongoose/mongoose-base/tree/master/doc/deployment#kubernetes).
@@ -210,6 +209,25 @@ mongoose-node-1                                      1/1     Running     0      
 mongoose-node-2                                      1/1     Running     0          11s
 ```
 It was created pod `mongoose` - this is entry node, and `mongoose-node-<>` - additional nodes.
+
+### REST API
+
+To run Mongoose service use `mongoose-service` chart:
+```bash
+helm install -n mongoose emc-mongoose/mongoose-service
+```
+With command `kubectl get -n mongoose services` you can see inforamtion about running services. For this example:
+
+|NAME            |TYPE           |CLUSTER-IP      |EXTERNAL-IP                   |PORT(S)          |AGE
+| --- | --- | --- | --- | --- | ---
+|mongoose-node   |LoadBalancer   |a.b.c.d   |**x.y.z.j**  |9999:31687/TCP   |25m
+
+We are interested in external ip **x.y.z.j** . We can send HTTP-requests to it [(see Remote API)](doc/interfaces/api/remote). For example:
+```
+curl -v -X POST http://x.y.z.j:9999/run
+```
+
+>REST API doc: https://github.com/emc-mongoose/mongoose-base/tree/master/doc/interfaces/api/remote
 
 # Debuging
 
