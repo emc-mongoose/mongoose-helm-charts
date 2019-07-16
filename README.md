@@ -14,6 +14,7 @@ Table of Contents
             * [CLI arguments](#cli-arguments)
             * [List of all params](#list-of-all-params)
          * [Distributed mode](#distributed-mode)
+         * [REST API](#rest-api)
    * [Debuging](#debuging)
    * [Releasing](#releasing)
 
