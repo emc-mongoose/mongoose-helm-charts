@@ -3,7 +3,7 @@ Table of Contents
 
    * [Deploying Mongoose with Helm](#deploying-mongoose-with-helm)
       * [About Helm](#about-helm)
-            * [Basic terms:](#basic-terms)
+         * [Basic terms](#basic-terms)
       * [Steps to deploy](#steps-to-deploy)
          * [Install Helm](#install-helm)
          * [Using Repo](#using-repo)
@@ -27,7 +27,7 @@ One of the ways to deploy an application on kubernetes is to use helm.
 
 [Helm](https://helm.sh/docs/) is the package manager for Kubernetes. 
 
-#### Basic terms:
+### Basic terms:
 
 `helm` - client tool running on your workstation
 
