@@ -100,7 +100,7 @@ and you can see list of releases with command:
 ```bash
 $ helm list
 NAME            REVISION        UPDATED                         STATUS          CHART                           APP VERSION     NAMESPACE
-mongoose        1               Thu Jun 20 13:25:50 2019        DEPLOYED        mongoose-0.1.1                  4.2.12          default
+mongoose        1               Thu Jun 20 13:25:50 2019        DEPLOYED        mongoose-0.1.3                  4.2.12          default
 ```
 ### Manual installation (good for tests)
 
@@ -187,11 +187,14 @@ resources:
     cpu: "4"
     memory: "4Gi"
 
+serviceAccount : ""
 
 ################## Mongoose CLI args ##################
 
 args: ""
 ```
+
+>Note: about [serviceAccount](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/)
 
 ### Distributed mode
 
