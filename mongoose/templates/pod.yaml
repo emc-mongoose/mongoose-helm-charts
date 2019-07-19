@@ -3,6 +3,9 @@ kind: Pod
 metadata:
   name: {{ .Chart.Name }}
 spec:
+  {{- if .Values.serviceAccount }}
+  serviceAccountName: {{ .Values.serviceAccount }}
+  {{- end }}
   initContainers:
   - name: wait-for-services
     image: busybox:1.28

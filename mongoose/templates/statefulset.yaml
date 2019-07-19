@@ -3,6 +3,9 @@ kind: StatefulSet
 metadata:
   name: {{ .Values.service.name }}
 spec:
+  {{- if .Values.serviceAccount }}
+  serviceAccountName: {{ .Values.serviceAccount }}
+  {{- end }}
   {{- $count := ((add (.Values.replicas|int) -1)|int) -}}
   {{ if lt $count 1}}
   replicas: 0

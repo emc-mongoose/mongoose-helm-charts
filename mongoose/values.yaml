@@ -26,6 +26,8 @@ resources:
     cpu: "4"
     memory: "4Gi"
 
+serviceAccount : ""
+
 
 ################## Mongoose CLI args ##################
 

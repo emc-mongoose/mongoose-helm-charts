@@ -6,6 +6,9 @@ metadata:
     app: {{ .Values.service.name }}
 spec:
   type: LoadBalancer
+  {{- if .Values.serviceAccount }}
+  serviceAccountName: {{ .Values.serviceAccount }}
+  {{- end }}
   ports:
     - name: data
       port: 1099
