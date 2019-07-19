@@ -1,3 +1,23 @@
+Table of Contents
+=================
+
+   * [Deploying Mongoose with Helm](#deploying-mongoose-with-helm)
+      * [About Helm](#about-helm)
+         * [Basic terms](#basic-terms)
+      * [Steps to deploy](#steps-to-deploy)
+         * [Install Helm](#install-helm)
+         * [Using Repo](#using-repo)
+         * [Manual installation (good for tests)](#manual-installation-good-for-tests)
+         * [Remove release](#remove-release)
+         * [Parametrisation](#parametrisation)
+            * [Custom image](#custom-image)
+            * [CLI arguments](#cli-arguments)
+            * [List of all params](#list-of-all-params)
+         * [Distributed mode](#distributed-mode)
+         * [REST API](#rest-api)
+   * [Debuging](#debuging)
+   * [Releasing](#releasing)
+
 # Deploying Mongoose with Helm
 
 Mongoose can be deployed in a kubernetes cluster. Deploy description can be found in the [documentation on the mongoose-base repository](https://github.com/emc-mongoose/mongoose-base/tree/master/doc/deployment#kubernetes).
@@ -7,7 +27,7 @@ One of the ways to deploy an application on kubernetes is to use helm.
 
 [Helm](https://helm.sh/docs/) is the package manager for Kubernetes. 
 
-#### Basic terms:
+### Basic terms:
 
 `helm` - client tool running on your workstation
 
@@ -190,6 +210,25 @@ mongoose-node-1                                      1/1     Running     0      
 mongoose-node-2                                      1/1     Running     0          11s
 ```
 It was created pod `mongoose` - this is entry node, and `mongoose-node-<>` - additional nodes.
+
+### REST API
+
+To run Mongoose service use `mongoose-service` chart:
+```bash
+helm install -n mongoose emc-mongoose/mongoose-service
+```
+With command `kubectl get -n mongoose services` you can see inforamtion about running services. For this example:
+
+|NAME            |TYPE           |CLUSTER-IP      |EXTERNAL-IP                   |PORT(S)          |AGE
+| --- | --- | --- | --- | --- | ---
+|mongoose-node   |LoadBalancer   |a.b.c.d   |**x.y.z.j**  |9999:31687/TCP   |25m
+
+We are interested in external ip **x.y.z.j** . We can send HTTP-requests to it [(see Remote API)](doc/interfaces/api/remote). For example:
+```
+curl -v -X POST http://x.y.z.j:9999/run
+```
+
+>REST API doc: https://github.com/emc-mongoose/mongoose-base/tree/master/doc/interfaces/api/remote
 
 # Debuging
 
