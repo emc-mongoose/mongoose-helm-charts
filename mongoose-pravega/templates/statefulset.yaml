@@ -33,6 +33,17 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           name: {{ .Values.service.name }}
           args: ["--run-node"]
+
+          {{- with .Values.resources }}
+          resources:
+            limits:
+              cpu: {{ quote .limits.cpu }}
+              memory: {{ quote .limits.memory }}
+            requests:
+              cpu: {{ quote .requests.cpu }}
+              memory: {{ quote .requests.memory }}
+          {{- end }}
+
           ports:
-            - containerPort: 1099
-            - containerPort: 9999
+          - containerPort: 1099
+          - containerPort: 9999

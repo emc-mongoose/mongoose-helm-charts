@@ -41,4 +41,14 @@ spec:
             
             {{- printf "]" }}
 
+      {{- with .Values.resources }}
+      resources:
+        limits:
+          cpu: {{ quote .limits.cpu }}
+          memory: {{ quote .limits.memory }}
+        requests:
+          cpu: {{ quote .requests.cpu }}
+          memory: {{ quote .requests.memory }}
+      {{- end }}
+
   restartPolicy: OnFailure
