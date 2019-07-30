@@ -6,7 +6,7 @@ spec:
   {{- if .Values.serviceAccount }}
   serviceAccountName: {{ .Values.serviceAccount }}
   {{- end }}
-  replicas: .Values.replicas
+  replicas: {{ .Values.replicas }}
   selector:
     matchLabels:
       name: {{ .Values.service.name }}
