@@ -6,6 +6,12 @@ spec:
   {{- if .Values.serviceAccount }}
   serviceAccountName: {{ .Values.serviceAccount }}
   {{- end }}
+
+  volumes:
+  - name: scenario-volume
+    configMap:
+      name: {{ .Release.Name }}-scenario-cm
+
   initContainers:
   - name: wait-for-services
     image: busybox:1.28
@@ -13,6 +19,7 @@ spec:
               '-c',
               '{{ template "mongoose.makeShellCommand" . }}'
              ]
+
   containers:
     - image: "{{ .Values.image.name }}:{{ .Values.image.tag }}"
       imagePullPolicy: {{ .Values.image.pullPolicy }}
@@ -28,20 +35,25 @@ spec:
                   {{- printf "," -}}
                 {{ end }}
               {{- end -}}
-              {{- printf "\"" -}}
+              {{- printf "\"," -}}
             {{- end -}}
 
+            {{- printf "\"--run-scenario=/opt/mongoose/scenario.js\"" -}}
             
             {{ if (ne $.Values.args "") and (ne $.Values.args nil) }}
-              {{- if gt $nodeCount 0 -}}
-                {{- printf "," }}
-              {{ end }}
+              {{- printf "," }}
               {{- .Values.args -}}
             {{ end }}
             
             {{- printf "]" }}
 
       {{- with .Values.resources }}
+
+      volumeMounts:
+      - name: scenario-volume
+        mountPath: /opt/mongoose/scenario.js
+        subPath: scenario.js
+
       resources:
         limits:
           cpu: {{ quote .limits.cpu }}
