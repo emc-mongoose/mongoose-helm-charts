@@ -69,6 +69,13 @@ Adding our repo:
 ```bash
 helm repo add emc-mongoose https://emc-mongoose.github.io/mongoose-helm-charts/
 ```
+
+Or update repo:
+
+```bash
+helm repo update
+```
+
 To check chart:
 ```bash
 $ helm search mongoose
