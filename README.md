@@ -149,6 +149,22 @@ helm install --name mongoose \
              --set "image.name=emcmongoose/mongoose-storage-driver-pravega" 
 ```
 
+
+#### Custom scenario
+
+Mongoose supports custom scenarios. There are 3 ways to supply the scenario to mongoose:
+
+1. Sending the scenario content via the REST API (mongoose service mode) (see [REST API](#rest-api) )
+The option #2 may require external connectivity so the additional option is necessary.
+
+2. Prepare the custom mongoose image containing the scenario which is required need to run. (see [Custom image](#custom-image))
+
+3. Specifying the file via the command line (mongoose interactive mode):
+
+```bash
+helm install -n mongoose emc-mongoose/mongoose --set scenario=$(cat <custom_scenario>.js)
+```
+
 #### List of all params
 
 To get list of all chart parameters:
@@ -192,6 +208,12 @@ serviceAccount : ""
 ################## Mongoose CLI args ##################
 
 args: ""
+
+############### Mongoose scenario path ################
+
+scenario: "Load.run();"
+
+
 ```
 
 >Note: about [serviceAccount](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/)
