@@ -47,13 +47,12 @@ spec:
             
             {{- printf "]" }}
 
-      {{- with .Values.resources }}
-
       volumeMounts:
       - name: scenario-volume
         mountPath: /opt/mongoose/scenario.js
         subPath: scenario.js
 
+      {{- with .Values.resources }}
       resources:
         limits:
           cpu: {{ quote .limits.cpu }}
