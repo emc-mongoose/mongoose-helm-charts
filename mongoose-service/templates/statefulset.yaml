@@ -41,7 +41,14 @@ spec:
             memory: {{ quote .requests.memory }}
         {{- end }}
 
-        args: ["--run-node"]
+        args: {{- printf " [" -}}
+          {{- printf "\"--run-node\"" -}}
+          {{ if (ne $.Values.args "") and (ne $.Values.args nil) }}
+            {{- printf "," }}
+            {{- .Values.args -}}
+          {{ end }}
+          {{- printf "]" }}
+
         ports:
         - containerPort: 1099
         - containerPort: 9999
