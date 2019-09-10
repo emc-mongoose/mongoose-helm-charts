@@ -13,7 +13,7 @@ replicas: 1
 image:
   name: emcmongoose/mongoose-base
   tag: "latest"
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
 
 service:
   name: mongoose-node
