@@ -8,7 +8,7 @@ spec:
   {{- if .Values.serviceAccount }}
   serviceAccountName: {{ .Values.serviceAccount }}
   {{- end }}
-  type: LoadBalancer
+  type: {{ .Values.service.type }}
   ports:
     - name: data
       port: 1099

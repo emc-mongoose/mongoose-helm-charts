@@ -5,7 +5,7 @@ metadata:
   labels:
     app: {{ .Values.service.name }}
 spec:
-  type: LoadBalancer
+  type: {{ .Values.service.type }}
   ports:
     - name: data
       port: 1099
