@@ -52,4 +52,6 @@ spec:
         ports:
         - containerPort: 1099
         - containerPort: 9999
+        - containerPort: 5005
+        command: ["/opt/mongoose/entrypoint-debug.sh"]
 
