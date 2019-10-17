@@ -15,7 +15,8 @@ Table of Contents
             * [List of all params](#list-of-all-params)
          * [Distributed mode](#distributed-mode)
          * [REST API](#rest-api)
-   * [Debuging](#debuging)
+   * [Debugging](#debugging)
+     * [Mongoose debugging](#mongoose-debugging)
    * [Releasing](#releasing)
 
 # Deploying Mongoose with Helm
@@ -212,6 +213,8 @@ resources:
 
 serviceAccount : ""
 
+debug: false
+
 ################## Mongoose CLI args ##################
 
 args: ""
@@ -262,13 +265,24 @@ curl -v -X POST http://x.y.z.j:9999/run
 
 >REST API doc: https://github.com/emc-mongoose/mongoose-base/tree/master/doc/interfaces/api/remote
 
-# Debuging
+# Debugging
 
 ```bash
 helm template --debug mongoose-helm-charts/mongoose ...
 ```
 
 See more in the helm docs.
+
+## Mongoose debugging
+
+To debug mongoose use option `debug`. Example: 
+```bash
+helm install -n mongoose emc-mongoose/mongoose-service --set debug=true ...
+```
+
+This option exposes port for mongoose debugging (5005 by default) and run container with `entrypoint_debug.sh`.
+
+[More](https://github.com/emc-mongoose/mongoose-base/tree/master/doc/deployment#debugging)
 
 # Releasing
 
