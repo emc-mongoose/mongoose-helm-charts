@@ -5,7 +5,7 @@ metadata:
   labels:
     app: {{ .Values.service.name }}
 spec:
-  type: LoadBalancer
+  type: {{ .Values.service.type }}
   {{- if .Values.serviceAccount }}
   serviceAccountName: {{ .Values.serviceAccount }}
   {{- end }}
