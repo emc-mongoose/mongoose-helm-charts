@@ -21,6 +21,6 @@ spec:
     - name: debug
       port: 5005
       targetPort: 5005
-    {{ -end }}
+    {{- end }}
   selector:
     name: {{ .Values.service.name }}
