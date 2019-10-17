@@ -3,7 +3,6 @@ kind: Service
 metadata:
   name: {{ .Values.service.name }}
   labels:
-    app: {{ .Values.service.name }}
     name: {{ .Values.service.name }}-0
 spec:
   {{- if .Values.serviceAccount }}
