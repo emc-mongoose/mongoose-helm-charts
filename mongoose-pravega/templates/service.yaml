@@ -5,9 +5,6 @@ metadata:
   labels:
     name: {{ .Values.service.name }}-0
 spec:
-  {{- if .Values.serviceAccount }}
-  serviceAccountName: {{ .Values.serviceAccount }}
-  {{- end }}
   type: {{ .Values.service.type }}
   ports:
     - name: data
