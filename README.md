@@ -10,6 +10,7 @@ Table of Contents
          * [Manual installation (good for tests)](#manual-installation-good-for-tests)
          * [Remove release](#remove-release)
          * [Parametrisation](#parametrisation)
+            * [Custom service type](#custom-service-type)
             * [Custom image](#custom-image)
             * [CLI arguments](#cli-arguments)
             * [List of all params](#list-of-all-params)
@@ -129,6 +130,13 @@ helm del --purge [release-name]
 
 ### Parametrisation
 
+#### Custom service type
+Mongoose service is deployed by default with type LoadBalancer. To specify other service type, use option `service.type`:
+
+```
+helm install --name mongoose emc-mongoose/mongoose --set service.type=NodePort ...
+```
+
 #### Custom image
 By default the chart uses the `mongoose-base` image. To specify a custom image, use the following parameters:
 
@@ -202,6 +210,7 @@ image:
 
 service:
   name: mongoose-node
+  type: :LoadBalancer
 
 resources:
   limits:
