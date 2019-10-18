@@ -47,6 +47,14 @@ spec:
             
             {{- printf "]" }}
 
+      ports:
+      - containerPort: 1099
+      - containerPort: 9999
+      {{ if .Values.debug }}
+      - containerPort: 5005
+      command: ["/opt/mongoose/entrypoint_debug.sh"]
+      {{- end }}
+
       volumeMounts:
       - name: scenario-volume
         mountPath: /opt/mongoose/scenario.js
@@ -61,5 +69,7 @@ spec:
           cpu: {{ quote .requests.cpu }}
           memory: {{ quote .requests.memory }}
       {{- end }}
+
+
 
   restartPolicy: OnFailure

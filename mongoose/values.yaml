@@ -29,6 +29,7 @@ resources:
 
 serviceAccount : ""
 
+debug: false
 
 ################## Mongoose CLI args ##################
 

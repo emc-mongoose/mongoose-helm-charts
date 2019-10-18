@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: {{ .Values.service.name }}
   labels:
-    app: {{ .Values.service.name }}
+    name: {{ .Values.service.name }}-0
 spec:
   type: {{ .Values.service.type }}
   {{- if .Values.serviceAccount }}
@@ -16,5 +16,10 @@ spec:
     - name: http
       port: 9999
       targetPort: 9999
+    {{- if .Values.debug }}
+    - name: debug
+      port: 5005
+      targetPort: 5005
+    {{- end }}
   selector:
     name: {{ .Values.service.name }}
