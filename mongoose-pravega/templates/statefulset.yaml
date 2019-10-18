@@ -47,3 +47,7 @@ spec:
           ports:
           - containerPort: 1099
           - containerPort: 9999
+          {{ if .Values.debug }}
+          - containerPort: 5005
+          command: ["/opt/mongoose/entrypoint_debug.sh"]
+          {{- end }}
