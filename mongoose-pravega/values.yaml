@@ -17,6 +17,7 @@ image:
 
 service:
   name: mongoose-node
+  type: LoadBalancer
 
 resources:
   limits:
