@@ -22,4 +22,4 @@ spec:
       targetPort: 5005
     {{- end }}
   selector:
-    name: {{ .Values.service.name }}
+    statefulset.kubernetes.io/pod-name: {{ .Chart.Name }}

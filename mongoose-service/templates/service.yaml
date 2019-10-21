@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: {{ .Values.service.name }}
   labels:
-    name: {{ .Values.service.name }}-0
+    name: {{ .Values.service.name }}
 spec:
   {{- if .Values.serviceAccount }}
   serviceAccountName: {{ .Values.serviceAccount }}
@@ -22,4 +22,4 @@ spec:
       targetPort: 5005
     {{- end }}
   selector:
-    name: {{ .Values.service.name }}
+    statefulset.kubernetes.io/pod-name: {{ .Values.pod.name }}-0

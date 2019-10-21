@@ -15,8 +15,11 @@ image:
   tag: "latest"
   pullPolicy: Always
 
-service:
+pod:
   name: mongoose-node
+
+service:
+  name: mongoose-svc
   type: LoadBalancer
 
 resources:
