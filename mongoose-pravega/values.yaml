@@ -13,10 +13,13 @@ replicas: 1
 image:
   name: emcmongoose/mongoose-storage-driver-pravega
   tag: "latest"
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
+
+pod:
+  name: mongoose-node
 
 service:
-  name: mongoose-node
+  name: mongoose-svc
   type: LoadBalancer
 
 resources:
@@ -27,11 +30,18 @@ resources:
     cpu: "4"
     memory: "4Gi"
 
+serviceAccount : ""
+
 debug: false
+
 
 ################## Mongoose CLI args ##################
 
 args: ""
+
+############### Mongoose scenario #####################
+
+scenario: "Load.run();"
 
 ############ Storage Driver Pravega CLI args ##########
 
