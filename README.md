@@ -192,8 +192,6 @@ As a result, a `values.yaml` is displayed, each of whose parameters can be overr
 ```bash
 ########################################################
 #### Default values for demo-chart.
-#### This is a YAML-formatted file.
-#### Declare variables to be passed into your templates.
 ########################################################
 
 #### Number of Mongoose replicas to deploy
@@ -206,11 +204,14 @@ replicas: 1
 image:
   name: emcmongoose/mongoose-base
   tag: "latest"
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
+
+pod:
+  name: mongoose-node
 
 service:
-  name: mongoose-node
-  type: :LoadBalancer
+  name: mongoose-svc
+  type: LoadBalancer
 
 resources:
   limits:
@@ -228,10 +229,9 @@ debug: false
 
 args: ""
 
-############### Mongoose scenario path ################
+############### Mongoose scenario #####################
 
 scenario: "Load.run();"
-
 
 ```
 
