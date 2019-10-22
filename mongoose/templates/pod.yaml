@@ -12,7 +12,7 @@ spec:
   volumes:
   - name: scenario-volume
     configMap:
-      name: {{ .Release.Name }}-scenario-cm
+      name: {{ .Chart.Name }}-scenario-cm
 
   initContainers:
   - name: wait-for-services
