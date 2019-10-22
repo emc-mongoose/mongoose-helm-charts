@@ -16,6 +16,8 @@ Table of Contents
             * [List of all params](#list-of-all-params)
          * [Distributed mode](#distributed-mode)
          * [REST API](#rest-api)
+            * [Design](#design)
+            * [Usage](#usage)
    * [Debugging](#debugging)
      * [Mongoose debugging](#mongoose-debugging)
    * [Releasing](#releasing)
@@ -261,7 +263,7 @@ It was created pod `mongoose` - this is entry node, and `mongoose-node-<>` - add
 
 ![high level design](mongoose%20helm%20chart.png)
 
-To use mongoose c REST, it is needed to deploy one (standalone mode) or more (distributed mode) nodes with a key `--run-node`. After that, they are waiting for requests. External access is provided through the service (`mongoose-svc`). The node with 0 serial number (`mongoose-node-0`) is selected as the entry node. And the service communicates with this node, all the requests come to `mongoose-node-0`.
+To use mongoose with REST, it is needed to deploy one (standalone mode) or more (distributed mode) nodes with a key `--run-node`. After that, they are waiting for requests. External access is provided through the service (`mongoose-svc`). The node with 0 serial number (`mongoose-node-0`) is selected as the entry node. And the service communicates with this node, all the requests come to `mongoose-node-0`.
 
 ##### Usage
 
