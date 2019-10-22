@@ -16,6 +16,8 @@ Table of Contents
             * [List of all params](#list-of-all-params)
          * [Distributed mode](#distributed-mode)
          * [REST API](#rest-api)
+            * [Design](#design)
+            * [Usage](#usage)
    * [Debugging](#debugging)
      * [Mongoose debugging](#mongoose-debugging)
    * [Releasing](#releasing)
@@ -257,17 +259,35 @@ It was created pod `mongoose` - this is entry node, and `mongoose-node-<>` - add
 
 ### REST API
 
-To run Mongoose service use `mongoose-service` chart:
+##### Design
+
+![high level design](mongoose%20helm%20chart.png)
+
+To use mongoose with REST, it is needed to deploy one (standalone mode) or more (distributed mode) nodes with a key `--run-node`. After that, they are waiting for requests. External access is provided through the service (`mongoose-svc`). The node with 0 serial number (`mongoose-node-0`) is selected as the entry node. And the service communicates with this node, all the requests come to `mongoose-node-0`.
+
+##### Usage
+
+To deploy Mongoose as service (`--run-node`) use `mongoose-service` chart:
 ```bash
-helm install -n mongoose emc-mongoose/mongoose-service
+helm install -n mongoose emc-mongoose/mongoose-service --set replicas=3
 ```
-With command `kubectl get -n mongoose services` you can see inforamtion about running services. For this example:
+
+With command `kubectl get -n mongoose pods` you can see inforamtion about running pods (`mongoose-node`). For this example:
+```
+NAME                                                 READY   STATUS      RESTARTS   AGE
+mongoose-node-0                                      1/1     Running     0          11s
+mongoose-node-1                                      1/1     Running     0          11s
+mongoose-node-2                                      1/1     Running     0          11s
+```
+With command `kubectl get -n mongoose svc` you can see inforamtion about running service (`mongoose-svc`). For this example:
 
 |NAME            |TYPE           |CLUSTER-IP      |EXTERNAL-IP                   |PORT(S)          |AGE
 | --- | --- | --- | --- | --- | ---
-|mongoose-node   |LoadBalancer   |a.b.c.d   |**x.y.z.j**  |9999:31687/TCP   |25m
+|mongoose-svc   |LoadBalancer   |a.b.c.d   |**x.y.z.j**  |9999:31687/TCP   |25m
 
-We are interested in external ip **x.y.z.j** . We can send HTTP-requests to it [(see Remote API)](doc/interfaces/api/remote). For example:
+By default, the type of service is the `LoadBalancer`, but it can be [changed](#custom-service-type).
+
+To run mongoose scenario it is needed to send HTTP-requests to the external ip **x.y.z.j** [(see Remote API)](doc/interfaces/api/remote). For example:
 ```
 curl -v -X POST http://x.y.z.j:9999/run
 ```

@@ -2,6 +2,8 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: {{ .Chart.Name }}
+  labels:
+    mongoose-role: entry-node
 spec:
   {{- if .Values.serviceAccount }}
   serviceAccountName: {{ .Values.serviceAccount }}
@@ -10,7 +12,7 @@ spec:
   volumes:
   - name: scenario-volume
     configMap:
-      name: {{ .Release.Name }}-scenario-cm
+      name: {{ .Chart.Name }}-scenario-cm
 
   initContainers:
   - name: wait-for-services
@@ -30,7 +32,7 @@ spec:
             {{- if gt $nodeCount 0 -}}
               {{- printf "\"--load-step-node-addrs=" -}}
               {{- range $index, $e := until $nodeCount -}}
-                {{- printf "%s-%d.%s" $.Values.service.name $index $.Values.service.name -}}
+                {{- printf "%s-%d.%s" $.Values.pod.name $index $.Values.pod.name -}}
                 {{ if ne (add $e 1) $nodeCount }}
                   {{- printf "," -}}
                 {{ end }}
