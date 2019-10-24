@@ -2,11 +2,11 @@ apiVersion: v1
 entries:
   mongoose:
   - apiVersion: v1
-    appVersion: 4.2.15
-    created: 2019-10-22T14:18:00.7107073+03:00
+    appVersion: 4.2.17
+    created: 2019-10-24T12:37:10.2310919+03:00
     description: Mongoose is a horizontally scalable and configurable performance
       testing utility.
-    digest: 55cf8472879bfd1cf1d45cbd9f4e85c2256194592018c5640c96cc7d8ea98aeb
+    digest: 89e73df8f5888a23631a1f5454aaf2aa81e418881269e84be54c8d75f8ec740a
     home: https://github.com/emc-mongoose/mongoose
     name: mongoose
     urls:
@@ -14,7 +14,7 @@ entries:
     version: 0.1.8
   - apiVersion: v1
     appVersion: 4.2.15
-    created: 2019-10-22T14:18:00.7075931+03:00
+    created: 2019-10-24T12:37:10.2285999+03:00
     description: Mongoose is a horizontally scalable and configurable performance
       testing utility.
     digest: 54476aee51f5da5af97881f5e0acfa8aa0ee7ad2718604b4b4219f28c84100ca
@@ -25,7 +25,7 @@ entries:
     version: 0.1.7
   - apiVersion: v1
     appVersion: 4.2.15
-    created: 2019-10-22T14:18:00.7046133+03:00
+    created: 2019-10-24T12:37:10.2257735+03:00
     description: Mongoose is a horizontally scalable and configurable performance
       testing utility.
     digest: 8cfbb58f661c1d7abd90313695e924db7a187dfb1c203dbbfd2f1f2b07fcf30a
@@ -36,7 +36,7 @@ entries:
     version: 0.1.6
   - apiVersion: v1
     appVersion: 4.2.15
-    created: 2019-10-22T14:18:00.7018589+03:00
+    created: 2019-10-24T12:37:10.2213303+03:00
     description: Mongoose is a horizontally scalable and configurable performance
       testing utility.
     digest: ce68d878d815fe5b9015a5702f5a0b637a086cd6b6e27ef1e3d58e458f4e8cd5
@@ -47,7 +47,7 @@ entries:
     version: 0.1.5
   - apiVersion: v1
     appVersion: 4.2.12
-    created: 2019-10-22T14:18:00.6985904+03:00
+    created: 2019-10-24T12:37:10.2184215+03:00
     description: Mongoose is a horizontally scalable and configurable performance
       testing utility.
     digest: 01835c83e9d3bc761d56e2aef48f2c25ba8e61f0b890ab472d60b40ffa0293f3
@@ -58,7 +58,7 @@ entries:
     version: 0.1.4
   - apiVersion: v1
     appVersion: 4.2.12
-    created: 2019-10-22T14:18:00.6957817+03:00
+    created: 2019-10-24T12:37:10.2153193+03:00
     description: Mongoose is a horizontally scalable and configurable performance
       testing utility.
     digest: 95c7f23d90956fca4d076e1b28d6795735109945379841cefbe743111fe931f3
@@ -69,7 +69,7 @@ entries:
     version: 0.1.3
   - apiVersion: v1
     appVersion: 4.2.12
-    created: 2019-10-22T14:18:00.692844+03:00
+    created: 2019-10-24T12:37:10.2125846+03:00
     description: Mongoose is a horizontally scalable and configurable performance
       testing utility.
     digest: 589e3d4892615b8add4f74c9eef96960efccbdda68a03937570d6ac5a562fd5f
@@ -80,7 +80,7 @@ entries:
     version: 0.1.2
   - apiVersion: v1
     appVersion: 4.2.12
-    created: 2019-10-22T14:18:00.6893006+03:00
+    created: 2019-10-24T12:37:10.2090698+03:00
     description: Mongoose is a horizontally scalable and configurable performance
       testing utility.
     digest: e2ceac15dd485cbb81ab2274e8c26f8f5e6aa02f01b081c893857205eb0fd623
@@ -89,12 +89,24 @@ entries:
     urls:
     - https://emc-mongoose.github.io/mongoose-helm-charts/mongoose-0.1.1.tgz
     version: 0.1.1
+  mongoose-pravega:
+  - apiVersion: v1
+    appVersion: 4.2.17
+    created: 2019-10-24T12:37:10.2335879+03:00
+    description: Mongoose chart with Pravega storage driver and additional specfic
+      params.
+    digest: e3ddbb4dc22e3739c446353c847b24d0ac6df0e91c4fbbf2eb1fd65f6cdcef05
+    home: https://github.com/emc-mongoose/mongoose-storage-driver-pravega
+    name: mongoose-pravega
+    urls:
+    - https://emc-mongoose.github.io/mongoose-helm-charts/mongoose-pravega-alpha.tgz
+    version: alpha
   mongoose-service:
   - apiVersion: v1
-    appVersion: 4.2.15
-    created: 2019-10-22T14:18:00.7301049+03:00
+    appVersion: 4.2.17
+    created: 2019-10-24T12:37:10.2530242+03:00
     description: Chart for deploying mongoose-nodes
-    digest: 1ecbbd3553a159739017590f98b15aa6570759f8748dcdb962b65c1c535bfdc7
+    digest: 1f15157460eecfcdec7dd76fdf5f277ec8c67e23568a28003cd8645cbec79760
     home: https://github.com/emc-mongoose/mongoose
     name: mongoose-service
     urls:
@@ -102,7 +114,7 @@ entries:
     version: 0.1.8
   - apiVersion: v1
     appVersion: 4.2.15
-    created: 2019-10-22T14:18:00.7274382+03:00
+    created: 2019-10-24T12:37:10.2502335+03:00
     description: Chart for deploying mongoose-nodes
     digest: 0fbd414d22190b4b2fca33508f575c3d870be043a5fd8f2be65297c41d7eabf2
     home: https://github.com/emc-mongoose/mongoose
@@ -112,7 +124,7 @@ entries:
     version: 0.1.7
   - apiVersion: v1
     appVersion: 4.2.15
-    created: 2019-10-22T14:18:00.724711+03:00
+    created: 2019-10-24T12:37:10.2475761+03:00
     description: Chart for deploying mongoose-nodes
     digest: 47de2ed1a3ed6ba6d972fdd11ba6ce58f5fa9cc6122d97af9a48f77ab2597cb6
     home: https://github.com/emc-mongoose/mongoose
@@ -122,7 +134,7 @@ entries:
     version: 0.1.6
   - apiVersion: v1
     appVersion: 4.2.12
-    created: 2019-10-22T14:18:00.7218128+03:00
+    created: 2019-10-24T12:37:10.2447415+03:00
     description: Chart for deploying mongoose-nodes
     digest: 040ae1910fb690a5f11a132eb8eb3e3eca15a16c6b6830aa0094aa1e363ba65d
     home: https://github.com/emc-mongoose/mongoose
@@ -132,7 +144,7 @@ entries:
     version: 0.1.5
   - apiVersion: v1
     appVersion: 4.2.12
-    created: 2019-10-22T14:18:00.7192097+03:00
+    created: 2019-10-24T12:37:10.2415855+03:00
     description: Chart for deploying mongoose-nodes
     digest: d1587e4e53b6eb58547ebe3352bafd3931d1c2484980aeb8db8b8284c6a33524
     home: https://github.com/emc-mongoose/mongoose
@@ -142,7 +154,7 @@ entries:
     version: 0.1.4
   - apiVersion: v1
     appVersion: 4.2.12
-    created: 2019-10-22T14:18:00.7165362+03:00
+    created: 2019-10-24T12:37:10.2387498+03:00
     description: Chart for deploying mongoose-nodes
     digest: d416f8175cd99102d90453cb17b20dca79b885ffbf72e961c230cb13988455e8
     home: https://github.com/emc-mongoose/mongoose
@@ -152,7 +164,7 @@ entries:
     version: 0.1.3
   - apiVersion: v1
     appVersion: 4.2.12
-    created: 2019-10-22T14:18:00.7136246+03:00
+    created: 2019-10-24T12:37:10.2359931+03:00
     description: Chart for deploying mongoose-nodes
     digest: b20018aedea21e0087dd07babbfca2adc83ef956079e6545710eb3762a52497a
     home: https://github.com/emc-mongoose/mongoose
@@ -160,4 +172,4 @@ entries:
     urls:
     - https://emc-mongoose.github.io/mongoose-helm-charts/mongoose-service-0.1.2.tgz
     version: 0.1.2
-generated: 2019-10-22T14:18:00.6860807+03:00
+generated: 2019-10-24T12:37:10.2055902+03:00
