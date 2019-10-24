@@ -1,7 +1,9 @@
+# only for debug entry node
+{{ if .Values.debug }}
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Values.service.name }}
+  name: mongoose-entry-node-svc
   labels:
     app: {{ .Chart.Name }}
 spec:
@@ -9,16 +11,11 @@ spec:
   serviceAccountName: {{ .Values.serviceAccount }}
   {{- end }}
   ports:
-    - name: data
-      port: 1099
-      targetPort: 1099
-    - name: http
-      port: 9999
       targetPort: 9999
-    {{ if .Values.debug }}
     - name: debug
       port: 5005
       targetPort: 5005
-    {{ end }}
+
   selector:
-    name: {{ .Values.pod.name }}
+    mongoose-role: entry-node
+{{ end }}

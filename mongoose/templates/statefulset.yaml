@@ -15,27 +15,24 @@ spec:
   selector:
     matchLabels:
       name: {{ .Values.pod.name }}
-  serviceName: {{ .Values.pod.name }}
+  serviceName: {{ .Values.service.name }}
   podManagementPolicy: Parallel
 
   template:
     metadata:
       labels:
-        mongoose-role: additional-node
         name: {{ .Values.pod.name }}
     spec:
-      {{- if .Values.serviceAccount }}
-      serviceAccountName: {{ .Values.serviceAccount }}
-      {{- end }}
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             - labelSelector:
                 matchExpressions:
-                  - key:      "app"
+                  - key:      "name"
                     operator: In
-                    values:   [{{ quote .Values.pod.name }}]
-              topologyKey:    "kubernetes.io/hostname"
+                    values:
+                    - {{ quote .Values.pod.name }}
+                    - {{ quote .Values.service.name }}
       containers:
         - image: "{{ .Values.image.name }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}

@@ -8,7 +8,7 @@ Generate shell command for initContainers
     {{- range $index, $e := until $nodeCount -}}
         {{- printf "\n\t\t" -}}
         {{- printf `while [ $( curl -s -o /dev/null -w "%{http_code}" ` -}}
-        {{- printf "http://%s-%d.%s:%d/config" $.Values.pod.name $index $.Values.pod.name 9999 -}}
+        {{- printf "http://%s-%d.%s:%d/config" $.Values.pod.name $index $.Values.service.name 9999 -}}
         {{- printf ") -ne 200]; do sleep 3; done;" -}}
     {{- end -}}
 {{- else }}
