@@ -1,6 +1,6 @@
 apiVersion: v1
 appVersion: "4.2.17"
 description: Mongoose chart with Pravega storage driver and additional specfic params.
-name: mongoose
+name: mongoose-pravega
 version: 0.1.8
-home: https://github.com/emc-mongoose/mongoose
+home: https://github.com/emc-mongoose/mongoose-storage-driver-pravega
