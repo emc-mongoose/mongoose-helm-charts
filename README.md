@@ -261,7 +261,7 @@ It was created pod `mongoose` - this is entry node, and `mongoose-node-<>` - add
 
 ##### Design
 
-![high level design](mongoose%20helm%20chart.png)
+![high level design](mongoose-helm-chart.png)
 
 To use mongoose with REST, it is needed to deploy one (standalone mode) or more (distributed mode) nodes with a key `--run-node`. After that, they are waiting for requests. External access is provided through the service (`mongoose-svc`). The node with 0 serial number (`mongoose-node-0`) is selected as the entry node. And the service communicates with this node, all the requests come to `mongoose-node-0`.
 
