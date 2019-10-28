@@ -279,11 +279,11 @@ mongoose-node-0                                      1/1     Running     0      
 mongoose-node-1                                      1/1     Running     0          11s
 mongoose-node-2                                      1/1     Running     0          11s
 ```
-With command `kubectl get -n mongoose svc` you can see inforamtion about running service (`mongoose-svc`). For this example:
+With command `kubectl get -n mongoose svc` you can see inforamtion about running service (`mongoose-entry-node-svc`). For this example:
 
 |NAME            |TYPE           |CLUSTER-IP      |EXTERNAL-IP                   |PORT(S)          |AGE
 | --- | --- | --- | --- | --- | ---
-|mongoose-svc   |LoadBalancer   |a.b.c.d   |**x.y.z.j**  |9999:31687/TCP   |25m
+|mongoose-entry-node-svc   |LoadBalancer   |a.b.c.d   |**x.y.z.j**  |9999:31687/TCP   |25m
 
 By default, the type of service is the `LoadBalancer`, but it can be [changed](#custom-service-type).
 
