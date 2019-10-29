@@ -292,6 +292,18 @@ To run mongoose scenario it is needed to send HTTP-requests to the external ip *
 curl -v -X POST http://x.y.z.j:9999/run
 ```
 
+Example of mongoose defaults for destributed mode:
+```
+...
+load:
+  step:
+    node:
+      addrs:
+      - mongoose-node-1.mongoose-svc
+      - mongoose-node-2.mongoose-svc
+...
+```
+
 >REST API doc: https://github.com/emc-mongoose/mongoose-base/tree/master/doc/interfaces/api/remote
 
 # Debugging
