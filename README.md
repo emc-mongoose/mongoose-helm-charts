@@ -21,6 +21,7 @@ Table of Contents
    * [Debugging](#debugging)
      * [Mongoose debugging](#mongoose-debugging)
    * [Releasing](#releasing)
+   * [Issue tracking](#issue-tracking)
 
 # Deploying Mongoose with Helm
 
@@ -353,3 +354,7 @@ helm install $REPO_NAME/$CHART_NAME
 >* REPO_NAME=emc-mongoose
 >* CHART_NAME=mongoose
 >* CHART_PATH=$CHART_NAME/
+
+# Issue tracking
+
+https://mongoose-issues.atlassian.net/projects/HELM/issues
