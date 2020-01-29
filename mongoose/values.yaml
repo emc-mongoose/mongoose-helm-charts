@@ -33,7 +33,7 @@ serviceAccount : ""
 
 args: ""
 
-############### Mongoose scenario path ################
+################## Mongoose scenario ##################
 
 scenario: 'Load.run();'
 
