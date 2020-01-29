@@ -218,7 +218,7 @@ args: ""
 
 ############### Mongoose scenario path ################
 
-scenario: "Load.run();"
+scenario: 'Load.run();'
 
 
 ```
