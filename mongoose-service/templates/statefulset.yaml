@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: {{ .Values.service.name }}
+  name: {{ .Values.pod.name }}
 spec:
   {{- if .Values.serviceAccount }}
   serviceAccountName: {{ .Values.serviceAccount }}
@@ -9,27 +9,29 @@ spec:
   replicas: {{ .Values.replicas }}
   selector:
     matchLabels:
-      name: {{ .Values.service.name }}
+      name: {{ .Values.pod.name }}
   serviceName: {{ .Values.service.name }}
   podManagementPolicy: Parallel
   template:
     metadata:
       labels:
-        name: {{ .Values.service.name }}
+        name: {{ .Values.pod.name }}
     spec:
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             - labelSelector:
                 matchExpressions:
-                  - key:      "app"
+                  - key:      "name"
                     operator: In
-                    values:   [{{ quote .Values.service.name }}]
+                    values:
+                    - {{ quote .Values.pod.name }}
+                    - {{ quote .Values.service.name }}
               topologyKey:    "kubernetes.io/hostname"
       containers:
       - image: "{{ .Values.image.name }}:{{ .Values.image.tag }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
-        name: {{ .Values.service.name }}
+        name: {{ .Values.pod.name }}
 
         {{- with .Values.resources }}
         resources:
@@ -52,4 +54,8 @@ spec:
         ports:
         - containerPort: 1099
         - containerPort: 9999
+        {{ if .Values.debug }}
+        - containerPort: 5005
+        command: ["/opt/mongoose/entrypoint_debug.sh"]
+        {{- end }}
 

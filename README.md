@@ -10,13 +10,18 @@ Table of Contents
          * [Manual installation (good for tests)](#manual-installation-good-for-tests)
          * [Remove release](#remove-release)
          * [Parametrisation](#parametrisation)
+            * [Custom service type](#custom-service-type)
             * [Custom image](#custom-image)
             * [CLI arguments](#cli-arguments)
             * [List of all params](#list-of-all-params)
          * [Distributed mode](#distributed-mode)
          * [REST API](#rest-api)
-   * [Debuging](#debuging)
+            * [Design](#design)
+            * [Usage](#usage)
+   * [Debugging](#debugging)
+     * [Mongoose debugging](#mongoose-debugging)
    * [Releasing](#releasing)
+   * [Issue tracking](#issue-tracking)
 
 # Deploying Mongoose with Helm
 
@@ -128,6 +133,13 @@ helm del --purge [release-name]
 
 ### Parametrisation
 
+#### Custom service type
+Mongoose service is deployed by default with type LoadBalancer. To specify other service type, use option `service.type`:
+
+```
+helm install --name mongoose emc-mongoose/mongoose --set service.type=NodePort ...
+```
+
 #### Custom image
 By default the chart uses the `mongoose-base` image. To specify a custom image, use the following parameters:
 
@@ -204,8 +216,6 @@ As a result, a `values.yaml` is displayed, each of whose parameters can be overr
 ```bash
 ########################################################
 #### Default values for demo-chart.
-#### This is a YAML-formatted file.
-#### Declare variables to be passed into your templates.
 ########################################################
 
 #### Number of Mongoose replicas to deploy
@@ -218,10 +228,14 @@ replicas: 1
 image:
   name: emcmongoose/mongoose-base
   tag: "latest"
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
+
+pod:
+  name: mongoose-node
 
 service:
-  name: mongoose-node
+  name: mongoose-svc
+  type: LoadBalancer
 
 resources:
   limits:
@@ -233,14 +247,15 @@ resources:
 
 serviceAccount : ""
 
+debug: false
+
 ################## Mongoose CLI args ##################
 
 args: ""
 
-################## Mongoose scenario #################
+############### Mongoose scenario #####################
 
 scenario: 'Load.run();'
-
 
 ```
 
@@ -266,30 +281,71 @@ It was created pod `mongoose` - this is entry node, and `mongoose-node-<>` - add
 
 ### REST API
 
-To run Mongoose service use `mongoose-service` chart:
+##### Design
+
+![high level design](mongoose-helm-chart.png)
+
+To use mongoose with REST, it is needed to deploy one (standalone mode) or more (distributed mode) nodes with a key `--run-node`. After that, they are waiting for requests. External access is provided through the service (`mongoose-entry-node-svc`). Internal access for internal mongoose-node communication is provided through the service (`mongoose-svc`, ClusterIP type). The node with 0 serial number (`mongoose-node-0`) is selected as the entry node. And the `mongoose-entry-node-svc` communicates with this node, all the requests come to `mongoose-node-0`.
+
+##### Usage
+
+To deploy Mongoose as service (`--run-node`) use `mongoose-service` chart:
 ```bash
-helm install -n mongoose emc-mongoose/mongoose-service
+helm install -n mongoose emc-mongoose/mongoose-service --set replicas=3
 ```
-With command `kubectl get -n mongoose services` you can see inforamtion about running services. For this example:
+
+With command `kubectl get -n mongoose pods` you can see inforamtion about running pods (`mongoose-node`). For this example:
+```
+NAME                                                 READY   STATUS      RESTARTS   AGE
+mongoose-node-0                                      1/1     Running     0          11s
+mongoose-node-1                                      1/1     Running     0          11s
+mongoose-node-2                                      1/1     Running     0          11s
+```
+With command `kubectl get -n mongoose svc` you can see inforamtion about running service (`mongoose-entry-node-svc`). For this example:
 
 |NAME            |TYPE           |CLUSTER-IP      |EXTERNAL-IP                   |PORT(S)          |AGE
 | --- | --- | --- | --- | --- | ---
-|mongoose-node   |LoadBalancer   |a.b.c.d   |**x.y.z.j**  |9999:31687/TCP   |25m
+|mongoose-entry-node-svc   |LoadBalancer   |a.b.c.d   |**x.y.z.j**  |9999:31687/TCP   |25m
 
-We are interested in external ip **x.y.z.j** . We can send HTTP-requests to it [(see Remote API)](doc/interfaces/api/remote). For example:
+By default, the type of service is the `LoadBalancer`, but it can be [changed](#custom-service-type).
+
+To run mongoose scenario it is needed to send HTTP-requests to the external ip **x.y.z.j** [(see Remote API)](doc/interfaces/api/remote). For example:
 ```
 curl -v -X POST http://x.y.z.j:9999/run
 ```
 
+Example of mongoose `defaults.yaml` for distributed mode:
+```
+...
+load:
+  step:
+    node:
+      addrs:
+      - mongoose-node-1.mongoose-svc
+      - mongoose-node-2.mongoose-svc
+...
+```
+
 >REST API doc: https://github.com/emc-mongoose/mongoose-base/tree/master/doc/interfaces/api/remote
 
-# Debuging
+# Debugging
 
 ```bash
 helm template --debug mongoose-helm-charts/mongoose ...
 ```
 
 See more in the helm docs.
+
+## Mongoose debugging
+
+To debug mongoose use option `debug`. Example: 
+```bash
+helm install -n mongoose emc-mongoose/mongoose-service --set debug=true ...
+```
+
+This option exposes port for mongoose debugging (5005 by default) and run container with `entrypoint_debug.sh`.
+
+[More](https://github.com/emc-mongoose/mongoose-base/tree/master/doc/deployment#debugging)
 
 # Releasing
 
@@ -319,3 +375,7 @@ helm install $REPO_NAME/$CHART_NAME
 >* REPO_NAME=emc-mongoose
 >* CHART_NAME=mongoose
 >* CHART_PATH=$CHART_NAME/
+
+# Issue tracking
+
+https://mongoose-issues.atlassian.net/projects/HELM/issues

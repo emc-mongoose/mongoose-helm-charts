@@ -1,17 +1,18 @@
+# service only for debug
+{{- if .Values.debug }}
 apiVersion: v1
 kind: Service
 metadata:
   name: {{ .Values.service.name }}
-  labels:
-    app: {{ .Values.service.name }}
 spec:
-  type: LoadBalancer
+  {{- if .Values.serviceAccount }}
+  serviceAccountName: {{ .Values.serviceAccount }}
+  {{- end }}
+  type: {{ .Values.service.type }}
   ports:
-    - name: data
-      port: 1099
-      targetPort: 1099
-    - name: http
-      port: 9999
-      targetPort: 9999
+    - name: debug
+      port: 5005
+      targetPort: 5005
   selector:
-    name: {{ .Values.service.name }}
+    mongoose-role: entry-node
+{{- end }}

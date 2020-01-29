@@ -15,8 +15,12 @@ image:
   tag: "latest"
   pullPolicy: Always
 
-service:
+pod:
   name: mongoose-node
+
+service:
+  name: mongoose-svc
+  type: LoadBalancer
 
 resources:
   limits:
@@ -28,12 +32,13 @@ resources:
 
 serviceAccount : ""
 
+debug: false
 
 ################## Mongoose CLI args ##################
 
 args: ""
 
-################## Mongoose scenario ##################
+############### Mongoose scenario #####################
 
 scenario: 'Load.run();'
 

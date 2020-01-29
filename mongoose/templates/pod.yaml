@@ -10,7 +10,7 @@ spec:
   volumes:
   - name: scenario-volume
     configMap:
-      name: {{ .Release.Name }}-scenario-cm
+      name: {{ .Chart.Name }}-scenario-cm
 
   initContainers:
   - name: wait-for-services
@@ -23,14 +23,14 @@ spec:
   containers:
     - image: "{{ .Values.image.name }}:{{ .Values.image.tag }}"
       imagePullPolicy: {{ .Values.image.pullPolicy }}
-      name: mongoose-container
+      name: {{ .Chart.Name }}
       args: {{- printf " [" -}}
                   
             {{- $nodeCount := ((add (.Values.replicas|int) -1)|int) -}}
             {{- if gt $nodeCount 0 -}}
               {{- printf "\"--load-step-node-addrs=" -}}
               {{- range $index, $e := until $nodeCount -}}
-                {{- printf "%s-%d.%s" $.Values.service.name $index $.Values.service.name -}}
+                {{- printf "%s-%d.%s" $.Values.pod.name $index $.Values.service.name -}}
                 {{ if ne (add $e 1) $nodeCount }}
                   {{- printf "," -}}
                 {{ end }}
@@ -47,6 +47,13 @@ spec:
             
             {{- printf "]" }}
 
+
+      {{ if .Values.debug }}
+      ports:
+      - containerPort: 5005
+      command: ["/opt/mongoose/entrypoint_debug.sh"]
+      {{- end }}
+
       volumeMounts:
       - name: scenario-volume
         mountPath: /opt/mongoose/scenario.js
@@ -61,5 +68,7 @@ spec:
           cpu: {{ quote .requests.cpu }}
           memory: {{ quote .requests.memory }}
       {{- end }}
+
+
 
   restartPolicy: OnFailure

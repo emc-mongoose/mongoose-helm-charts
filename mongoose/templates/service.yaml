@@ -3,9 +3,8 @@ kind: Service
 metadata:
   name: {{ .Values.service.name }}
   labels:
-    app: {{ .Values.service.name }}
+    app: {{ .Chart.Name }}
 spec:
-  type: LoadBalancer
   {{- if .Values.serviceAccount }}
   serviceAccountName: {{ .Values.serviceAccount }}
   {{- end }}
@@ -16,5 +15,10 @@ spec:
     - name: http
       port: 9999
       targetPort: 9999
+    {{ if .Values.debug }}
+    - name: debug
+      port: 5005
+      targetPort: 5005
+    {{ end }}
   selector:
-    name: {{ .Values.service.name }}
+    name: {{ .Values.pod.name }}

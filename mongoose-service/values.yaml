@@ -13,10 +13,14 @@ replicas: 1
 image:
   name: emcmongoose/mongoose-base
   tag: "latest"
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
+
+pod:
+  name: mongoose-node
 
 service:
-  name: mongoose-node
+  name: mongoose-svc
+  type: LoadBalancer
 
 resources:
   limits:
@@ -27,6 +31,8 @@ resources:
     memory: "4Gi"
 
 serviceAccount : ""
+
+debug: false
 
 ################## Mongoose CLI args ##################
 
