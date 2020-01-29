@@ -168,9 +168,30 @@ The option #2 may require external connectivity so the additional option is nece
 
 3. Specifying the file via the command line (mongoose interactive mode):
 
+With `scenario` option:
 ```bash
-helm install -n mongoose emc-mongoose/mongoose --set scenario=$(cat <custom_scenario>.js)
+helm install -n mongoose emc-mongoose/mongoose --set scenario='$(cat <custom_scenario>.js)'
 ```
+
+With `values.yaml` overwriting:
+```yaml
+scenario: 'while(true) {
+            Load.config(
+            {"load":{
+                "step":{
+                       "limit":{
+                                "time": 1
+                                }
+                       }
+                }
+            }).run();
+          }'
+```
+```bash
+helm install -n mongoose emc-mongoose/mongoose --values values.yaml
+```
+
+>Limitations: Inside the scenario, use only double quotes ("), or escape single quotes (\\').
 
 #### List of all params
 
@@ -216,7 +237,7 @@ serviceAccount : ""
 
 args: ""
 
-############### Mongoose scenario path ################
+################## Mongoose scenario #################
 
 scenario: 'Load.run();'
 
