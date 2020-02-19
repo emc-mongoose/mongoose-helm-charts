@@ -326,7 +326,7 @@ load:
 ...
 ```
 
->REST API doc: https://github.com/emc-mongoose/mongoose-base/tree/master/doc/interfaces/api/remote
+>REST API doc: https://github.com/emc-mongoose/mongoose-base/tree/master/doc/usage/api/remote
 
 # Debugging
 
