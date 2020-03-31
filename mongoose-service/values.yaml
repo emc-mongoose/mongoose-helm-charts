@@ -30,7 +30,7 @@ resources:
     cpu: "4"
     memory: "4Gi"
 
-serviceAccount : ""
+serviceAccount: ""
 
 debug: false
 
