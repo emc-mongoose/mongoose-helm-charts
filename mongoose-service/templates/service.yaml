@@ -13,10 +13,10 @@ spec:
   ports:
     - name: data
       port: 1099
-      targetPort: 1099
+      targetPort: {{ .Values.dataPort }}
     - name: http
       port: 9999
-      targetPort: 9999
+      targetPort: {{ .Values.httpPort }}
 
     {{- if .Values.debug }}
     - name: debug
