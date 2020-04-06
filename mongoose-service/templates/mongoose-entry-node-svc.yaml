@@ -10,9 +10,9 @@ spec:
   ports:
     - name: data
       port: 1099
-      targetPort: {{ .Values.dataPort }}
+      targetPort: {{ .Values.service.dataPort }}
     - name: http
       port: 9999
-      targetPort: {{ .Values.httpPort }}
+      targetPort: {{ .Values.service.httpPort }}
   selector:
     statefulset.kubernetes.io/pod-name: {{ .Values.pod.name }}-0

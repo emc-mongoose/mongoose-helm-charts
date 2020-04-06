@@ -21,6 +21,8 @@ pod:
 service:
   name: mongoose-svc
   type: LoadBalancer
+  httpPort: 9999
+  dataPort: 1099
 
 resources:
   limits:
@@ -35,9 +37,6 @@ serviceAccount: ""
 entryNode:
   service:
     name: "mongoose-entry-node-svc"
-
-httpPort: 9999
-dataPort: 1099
 
 debug: false
 
