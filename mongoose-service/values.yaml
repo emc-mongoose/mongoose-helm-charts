@@ -35,8 +35,9 @@ serviceAccount: ""
 entryNode:
   service:
     name: "mongoose-entry-node-svc"
-    httpPort: 9999
-    dataPort: 1099
+
+httpPort: 9999
+dataPort: 1099
 
 debug: false
 
