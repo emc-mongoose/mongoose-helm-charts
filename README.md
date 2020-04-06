@@ -247,6 +247,10 @@ resources:
 
 serviceAccount : ""
 
+entryNode:
+  service:
+    name: "mongoose-entry-node-svc"
+
 debug: false
 
 ################## Mongoose CLI args ##################
