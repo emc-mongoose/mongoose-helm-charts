@@ -6,10 +6,6 @@ metadata:
     app: {{ .Chart.Name }}
 spec:
 
-  {{- if .Values.serviceAccount }}
-  serviceAccountName: {{ .Values.serviceAccount }}
-  {{- end }}
-
   ports:
     - name: data
       port: 1099

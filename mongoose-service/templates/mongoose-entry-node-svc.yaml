@@ -4,9 +4,6 @@ metadata:
   name: mongoose-entry-node-svc
 spec:
   type: {{ .Values.service.type }}
-  {{- if .Values.serviceAccount }}
-  serviceAccountName: {{ .Values.serviceAccount }}
-  {{- end }}
   ports:
     - name: data
       port: 1099
