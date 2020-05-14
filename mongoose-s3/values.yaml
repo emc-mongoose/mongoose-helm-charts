@@ -43,8 +43,11 @@ args: ""
 
 scenario: "Load.run();"
 
-############ Storage Driver Pravega CLI args ##########
+############ Storage Driver S3 CLI args ##########
 
-pravega:
-  controllerIP : "127.0.0.1"
-  namespace: "scope"
+s3: {}
+# REQUIRED SETTINGS
+#   addresses: my-cluster-s3.ecs.cluster.local
+#   port: 80
+#   accessKey: my-access-key
+#   secretKey: my-secret-key
