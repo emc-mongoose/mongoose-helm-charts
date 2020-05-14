@@ -1,0 +1,50 @@
+
+########################################################
+#### Default values for demo-chart.
+########################################################
+
+#### Number of Mongoose replicas to deploy
+
+replicas: 1
+
+#### Since mongoose version 4 there is one image for controller and for peer (driver) nodes
+#### The mongoose image configuration
+
+image:
+  name: emcmongoose/mongoose-storage-driver-s3
+  tag: "latest"
+  pullPolicy: Always
+
+pod:
+  name: mongoose-node
+
+service:
+  name: mongoose-svc
+  type: LoadBalancer
+
+resources:
+  limits:
+    cpu: "4"
+    memory: "4Gi"
+  requests:
+    cpu: "4"
+    memory: "4Gi"
+
+serviceAccount : ""
+
+debug: false
+
+
+################## Mongoose CLI args ##################
+
+args: ""
+
+############### Mongoose scenario #####################
+
+scenario: "Load.run();"
+
+############ Storage Driver Pravega CLI args ##########
+
+pravega:
+  controllerIP : "127.0.0.1"
+  namespace: "scope"
