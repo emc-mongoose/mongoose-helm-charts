@@ -38,7 +38,7 @@ spec:
               {{- .Values.args -}}
             {{ end }}
 
-            {{ if (eq $.Values.args "") or (ne $.Values.args nil) }}
+            {{ if (eq $.Values.args "") or (eq $.Values.args nil) }}
               --storage-auth-uid={{ required "s3.accessKey is required" .Values.s3.accessKey }}
               --storage-auth-secret={{ required "s3.secretKey is required" .Values.s3.secretKey }}
               --storage-net-node-addrs={{ required "s3.addresses is required" .Values.s3.addresses }}
