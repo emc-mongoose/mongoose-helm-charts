@@ -1,6 +1,6 @@
 
 ########################################################
-#### Default values for demo-chart.
+#### Default values for S3 SD chart.
 ########################################################
 
 #### Number of Mongoose replicas to deploy
