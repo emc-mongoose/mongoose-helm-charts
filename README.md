@@ -1,42 +1,49 @@
 Table of Contents
 =================
 
-   * [Deploying Mongoose with Helm](#deploying-mongoose-with-helm)
-      * [About Helm](#about-helm)
-         * [Basic terms](#basic-terms)
-      * [Steps to deploy](#steps-to-deploy)
-         * [Install Helm](#install-helm)
-         * [Using Repo](#using-repo)
-         * [Manual installation (good for tests)](#manual-installation-good-for-tests)
-         * [Remove release](#remove-release)
-         * [Parametrisation](#parametrisation)
-            * [Custom service type](#custom-service-type)
-            * [Custom image](#custom-image)
-            * [CLI arguments](#cli-arguments)
-            * [List of all params](#list-of-all-params)
-         * [Distributed mode](#distributed-mode)
-         * [REST API](#rest-api)
-            * [Design](#design)
-            * [Usage](#usage)
-   * [Debugging](#debugging)
-     * [Mongoose debugging](#mongoose-debugging)
-   * [Releasing](#releasing)
-   * [Issue tracking](#issue-tracking)
+- [Deploying Mongoose with Helm](#deploying-mongoose-with-helm)
+- [About Helm](#about-helm)
+    + [Basic terms:](#basic-terms-)
+- [Steps to deploy](#steps-to-deploy)
+  * [Install Helm](#install-helm)
+  * [Using Repo](#using-repo)
+  * [Installation from sources (good for tests)](#installation-from-sources--good-for-tests-)
+  * [Remove release](#remove-release)
+  * [Detailed Mongoose installation](#detailed-mongoose-installation)
+    + [Parametrisation](#parametrisation)
+      - [Custom service type](#custom-service-type)
+      - [Custom image](#custom-image)
+      - [CLI arguments](#cli-arguments)
+      - [Custom scenario](#custom-scenario)
+      - [List of all params](#list-of-all-params)
+    + [Distributed mode](#distributed-mode)
+      - [Classic installation](#classic-installation)
+      - [Installation as a service (recommended)](#installation-as-a-service--recommended-)
+        * [Design](#design)
+        * [Usage](#usage)
+- [Debugging](#debugging)
+  * [Mongoose debugging](#mongoose-debugging)
+- [Releasing](#releasing)
+- [Issue tracking](#issue-tracking)
 
 # Deploying Mongoose with Helm
 
 Mongoose can be deployed in a kubernetes cluster. Deploy description can be found in the [documentation on the mongoose-base repository](https://github.com/emc-mongoose/mongoose-base/tree/master/doc/deployment#kubernetes).
 One of the ways to deploy an application on kubernetes is to use helm.
 
-## About Helm
+---
+
+# About Helm
 
 [Helm](https://helm.sh/docs/) is the package manager for Kubernetes. 
+
+> [Helm 3 release](https://helm.sh/blog/helm-3-released/)
 
 ### Basic terms:
 
 `helm` - client tool running on your workstation
 
-`tiller` - server component running on kubernetes cluster
+`tiller` (only for helm 2) - server component running on kubernetes cluster
 
 `charts` - packages
 
@@ -44,8 +51,9 @@ One of the ways to deploy an application on kubernetes is to use helm.
 
 Below are the steps to deploy a mongoose-storage-driver-pravega on kubernetes using the chart.
 
-## Steps to deploy
-### Install Helm
+---
+# Steps to deploy
+## Install Helm
 
 >Note: since helm is a kubernetes package manager, kubectl tool must first be installed on the current maschine and a k8s cluster deployed.
 
@@ -53,21 +61,25 @@ Below are the steps to deploy a mongoose-storage-driver-pravega on kubernetes us
 Get the latest tarball from https://github.com/helm/helm/releases
 
 ```bash
-wget https://storage.googleapis.com/kubernetes-helm/helm-v2.14.0-linux-amd64.tar.gz
+wget https://get.helm.sh/helm-v3.2.4-linux-amd64.tar.gz
 tar -xzf helm-*
 sudo mv linux-amd64/helm /usr/local/bin/
 ```
-Next command will install Tiller in the cluster. 
->Note: Tiller is installed by default in the kubectl context cluster. Accordingly, the machine must be switched to the cluster context (see command `kubectl config use-context [cluster-name]` ). Otherwise, you may get errors.
-```bash
-helm init
-```
 
-### Using Repo
+> For helm 2: 
+> Next command will install Tiller in the cluster. 
+> Note: Tiller is installed by default in the kubectl context cluster. Accordingly, the machine must be switched to the cluster context (see command `kubectl config use-context [cluster-name]` ). Otherwise, you may get errors.
+> ```bash
+> helm init
+> ```
+
+## Using Repo
 
 To install a chart, you can run the helm `install` command. Helm has several ways to find and install a chart, but the easiest is to use one of the chart registry.
 
 By default helm use `stable/` repo with url: `https://kubernetes-charts.storage.googleapis.com`
+
+>Note: `helm repo add stable https://kubernetes-charts.storage.googleapis.com/`
 
 Adding our repo:
 
@@ -83,68 +95,79 @@ helm repo update
 
 To check chart:
 ```bash
-$ helm search mongoose
+$ helm search repo mongoose
 
 NAME                            CHART VERSION   APP VERSION     DESCRIPTION
-emc-mongoose/mongoose   0.1.1           4.2.12          Mongoose is a horizontally scalable and configurable perf...
+emc-mongoose/mongoose           0.1.9           4.2.17          Mongoose is a horizontally scalable and configu...
+emc-mongoose/mongoose-pravega   alpha           4.2.17          Mongoose chart with Pravega storage driver and ...
+emc-mongoose/mongoose-service   0.1.11          4.2.18          Chart for deploying mongoose-nodes
 ```
 To get more information:
 ```bash
 $ helm inspect chart emc-mongoose/mongoose
 
 apiVersion: v1
-appVersion: 4.2.12
+appVersion: 4.2.17
 description: Mongoose is a horizontally scalable and configurable performance testing
   utility.
-home: https://github.com/emc-mongoose/mongoose-storage-driver-pravega
+home: https://github.com/emc-mongoose/mongoose
 name: mongoose
-version: 0.1.1
+version: 0.1.9
 ```
+
 To install chart (create kubernetes object defined in a chart):
 ```bash
-helm install --name [release-name] emc-mongoose/mongoose [args]
+helm install [release-name] --namespace [namespace-name] emc-mongoose/mongoose-service [args]
 ```
-or with random name
+
+or with random name and default namespace
 ```bash
-helm install emc-mongoose/mongoose [args]
+helm install --generate-name emc-mongoose/mongoose-service [args]
 ```
+
 and you can see list of releases with command:
 ```bash
-$ helm list
-NAME            REVISION        UPDATED                         STATUS          CHART                           APP VERSION     NAMESPACE
-mongoose        1               Thu Jun 20 13:25:50 2019        DEPLOYED        mongoose-0.1.3                  4.2.12          default
+$ helm ls -A -a
+NAME                            NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                       APP VERSION
+mongoose                        mongoose        1               2020-07-28 16:20:43.0715076 +0300 STD   deployed        mongoose-service-0.1.11     4.2.18
+mongoose-service-1595942475     default         1               2020-07-28 16:21:19.298276 +0300 STD    deployed        mongoose-service-0.1.11     4.2.18
 ```
-### Manual installation (good for tests)
+
+## Installation from sources (good for tests)
 
 It is also possible to install a chart from source.
 
 ```bash
 git clone https://github.com/emc-mongoose/mongoose-helm-charts.git
-helm install --name [release-name] mongoose-helm-charts/mongoose
+helm install [release-name] --namespace [namespace-name] mongoose-helm-charts/mongoose-service
 ```
 
-### Remove release
+## Remove release
 
->Note: It is **strongly recommended** to remove the releases with the help of helm. If the release was installed with command `helm install` and will be removed with `kubectl`, it can lead to unexpected behavior.
+> Note: It is **strongly recommended** to remove the releases with the help of helm. If the release was installed with command `helm install` and will be removed with `kubectl`, it can lead to unexpected behavior.
 
 ```bash
-helm del --purge [release-name]
+helm uninstall --namespace [namespace-name] [release-name]
 ```
 
+## Detailed Mongoose installation
+
 ### Parametrisation
+
+**!!!** All subsequent parameterization steps are available for all charts in this repo
 
 #### Custom service type
 Mongoose service is deployed by default with type LoadBalancer. To specify other service type, use option `service.type`:
 
 ```
-helm install --name mongoose emc-mongoose/mongoose --set service.type=NodePort ...
+helm install mongoose emc-mongoose/mongoose --set service.type=NodePort ...
 ```
 
 #### Custom image
 By default the chart uses the `mongoose-base` image. To specify a custom image, use the following parameters:
 
 ```bash
-helm install --name mongoose emc-mongoose/mongoose \
+helm install mongoose emc-mongoose/mongoose \
              --set image.name=emcmongoose/mongoose-storage-driver-pravega
 ```
 where `emcmongoose/mongoose-storage-driver-pravega` - name of docker image
@@ -154,7 +177,7 @@ where `emcmongoose/mongoose-storage-driver-pravega` - name of docker image
 To set mongoose CLI arguments use helm argument `--set args=...`:
 
 ```bash
-helm install --name mongoose \
+helm install mongoose \
              emc-mongoose/mongoose \
              --set "args=\"--storage-driver-limit-concurrency=5\"\,\"--load-step-limit-time=60s\"" 
 ```
@@ -162,7 +185,7 @@ helm install --name mongoose \
 Example with custom image:
 
 ```bash
-helm install --name mongoose \
+helm install mongoose \
              emc-mongoose/mongoose \
              --set "args=\"--storage-net-node-addrs=<x.y.z.j>\"\,\"--storage-namespace=scope4\"\,\"--load-step-limit-time=10s\"" \
              --set "image.name=emcmongoose/mongoose-storage-driver-pravega" 
@@ -182,7 +205,7 @@ The option #2 may require external connectivity so the additional option is nece
 
 With `scenario` option:
 ```bash
-helm install -n mongoose emc-mongoose/mongoose --set scenario='$(cat <custom_scenario>.js)'
+helm install mongoose emc-mongoose/mongoose --set scenario='$(cat <custom_scenario>.js)'
 ```
 
 With `values.yaml` overwriting:
@@ -203,7 +226,7 @@ scenario: 'while(true) {
 helm install -n mongoose emc-mongoose/mongoose --values values.yaml
 ```
 
->Limitations: Inside the scenario, use only double quotes ("), or escape single quotes (\\').
+> Limitations: Inside the scenario, use only double quotes ("), or escape single quotes (\\').
 
 #### List of all params
 
@@ -212,7 +235,9 @@ To get list of all chart parameters:
 ```bash
 $ helm inspect values emc-mongoose/mongoose
 ```
+
 As a result, a `values.yaml` is displayed, each of whose parameters can be overridden with `--set <key1.key2.<...>.keyN>=<value>` command.
+
 ```bash
 ########################################################
 #### Default values for demo-chart.
@@ -259,15 +284,27 @@ scenario: 'Load.run();'
 
 ```
 
->Note: about [serviceAccount](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/)
+> Note: about [serviceAccount](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/)
+
+---
 
 ### Distributed mode
+
+Mongoose can be deployed in 2 ways (charts):
+
+* `mongoose` chart - Classic way - That is, helm deploys several additional nodes at once and one entry node, from which the scenario and, accordingly, the load **immediately starts to run**.
+
+* `mongoose-service` chart - Service mode (with Remote API). Helm deploys several mongoose nodes that are pending a request. The **load starts after a remote request**. And after the end of the scenario, these nodes go into pending state again.
+
+> [More about distributed mode](https://github.com/emc-mongoose/mongoose-base/tree/master/doc/design/modes/distributed_mode#distributed-mode)
+
+#### Classic installation 
 
 As can be seen from the `replicas` parameter, Mongoose by default run in standalone mode with count of node = "1".
 
 To change count of Mongoose node use parametr `--set "replicas=<int>"`
 ```
-helm install --name mongoose emc-mongoose/mongoose --set "replicas=4"
+helm install mongoose emc-mongoose/mongoose --set "replicas=4"
 ```
 Let's see the list of pods
 ```
@@ -277,9 +314,12 @@ mongoose-node-0                                      1/1     Running     0      
 mongoose-node-1                                      1/1     Running     0          11s
 mongoose-node-2                                      1/1     Running     0          11s
 ```
-It was created pod `mongoose` - this is entry node, and `mongoose-node-<>` - additional nodes.
 
-### REST API
+It creates pods
+* `mongoose` - entry node 
+* `mongoose-node-<>` - additional node
+
+#### Installation as a service (recommended)
 
 ##### Design
 
@@ -290,8 +330,9 @@ To use mongoose with REST, it is needed to deploy one (standalone mode) or more 
 ##### Usage
 
 To deploy Mongoose as service (`--run-node`) use `mongoose-service` chart:
+
 ```bash
-helm install -n mongoose emc-mongoose/mongoose-service --set replicas=3
+helm install mongoose emc-mongoose/mongoose-service --set replicas=3
 ```
 
 With command `kubectl get -n mongoose pods` you can see inforamtion about running pods (`mongoose-node`). For this example:
@@ -301,13 +342,14 @@ mongoose-node-0                                      1/1     Running     0      
 mongoose-node-1                                      1/1     Running     0          11s
 mongoose-node-2                                      1/1     Running     0          11s
 ```
+
 With command `kubectl get -n mongoose svc` you can see inforamtion about running service (`mongoose-entry-node-svc`). For this example:
 
 |NAME            |TYPE           |CLUSTER-IP      |EXTERNAL-IP                   |PORT(S)          |AGE
 | --- | --- | --- | --- | --- | ---
 |mongoose-entry-node-svc   |LoadBalancer   |a.b.c.d   |**x.y.z.j**  |9999:31687/TCP   |25m
 
-By default, the type of service is the `LoadBalancer`, but it can be [changed](#custom-service-type).
+> By default, the type of service is the `LoadBalancer`, but it can be [changed](#custom-service-type).
 
 To run mongoose scenario it is needed to send HTTP-requests to the external ip **x.y.z.j** [(see Remote API)](doc/interfaces/api/remote). For example:
 ```
@@ -326,7 +368,9 @@ load:
 ...
 ```
 
->REST API doc: https://github.com/emc-mongoose/mongoose-base/tree/master/doc/usage/api/remote
+> REST API doc: https://github.com/emc-mongoose/mongoose-base/tree/master/doc/usage/api/remote
+
+---
 
 # Debugging
 
@@ -334,22 +378,24 @@ load:
 helm template --debug mongoose-helm-charts/mongoose ...
 ```
 
-See more in the helm docs.
+> See more in the helm docs.
 
 ## Mongoose debugging
 
-To debug mongoose use option `debug`. Example: 
+To debug mongoose with some IDE use option `debug`. Example: 
 ```bash
-helm install -n mongoose emc-mongoose/mongoose-service --set debug=true ...
+helm install mongoose emc-mongoose/mongoose-service --set debug=true ...
 ```
 
 This option exposes port for mongoose debugging (5005 by default) and run container with `entrypoint_debug.sh`.
 
-[More](https://github.com/emc-mongoose/mongoose-base/tree/master/doc/deployment#debugging)
+> [More](https://github.com/emc-mongoose/mongoose-base/tree/master/doc/deployment#debugging)
+
+---
 
 # Releasing
 
->Note: `master` branch is used to store charts code, and `gh-pages` branch as charts repository.
+> Note: `master` branch is used to store charts code, and `gh-pages` branch as charts repository.
 
 0) Ensure that all changes were committed and pushed
 1) Ensure that the `version: <X.Y.Z>` is changed in `Chart.yaml` 
