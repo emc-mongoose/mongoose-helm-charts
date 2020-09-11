@@ -29,8 +29,8 @@ spec:
                     operator: In
                     values:
                     - {{ quote .Values.name }}
-                    - {{ quote .Values.name }}-controller
-                    - {{ quote .Values.name }}-worker
+                    - "{{ .Values.name }}-controller"
+                    - "{{ .Values.name }}-worker"
                     - {{ quote .Values.service.name }}
               topologyKey:    "kubernetes.io/hostname"
       containers:
