@@ -39,7 +39,9 @@ serviceAccount : ""
 
 args: ""
 
-############### Mongoose scenario #####################
+########### Mongoose scenario (js or json) ############
 
-scenario: ''
+scenario: 'Load.run();'
+
+
 

@@ -25,7 +25,7 @@ spec:
       name: {{ .Values.name }}-controller
       args: {{- printf " [" -}}
 
-            {{- printf "\"--test-scenario-file=/opt/mongoose/scenario.json\"" -}}
+            {{- printf "\"--test-scenario-file=/opt/mongoose/scenario\"" -}}
             
             {{ if (ne $.Values.args "") and (ne $.Values.args nil) }}
               {{- printf "," }}
@@ -37,8 +37,8 @@ spec:
 
       volumeMounts:
       - name: scenario-volume
-        mountPath: /opt/mongoose/scenario.json
-        subPath: scenario.json
+        mountPath: /opt/mongoose/scenario
+        subPath: scenario
 
       {{- with .Values.resources }}
       resources:
