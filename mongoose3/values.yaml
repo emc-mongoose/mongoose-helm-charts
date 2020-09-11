@@ -41,5 +41,5 @@ args: ""
 
 ############### Mongoose scenario #####################
 
-scenario: 'Load.run();'
+scenario: ''
 

@@ -1,7 +1,9 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: {{ .Chart.Name }}
+  name: {{ .Values.name }}-controller
+  labels:
+    app: {{ .Chart.Name }}
 spec:
   {{- if .Values.serviceAccount }}
   serviceAccountName: {{ .Values.serviceAccount }}
@@ -10,20 +12,17 @@ spec:
   volumes:
   - name: scenario-volume
     configMap:
-      name: {{ .Chart.Name }}-scenario-cm
+      name: {{ .Values.name }}-scenario-cm
 
   initContainers:
-  - name: wait-for-services
+  - name: sleep
     image: busybox:1.28
-    command: ['sh',
-              '-c',
-              '{{ template "mongoose.makeShellCommand" . }}'
-             ]
+    command: ['sh','-c','sleep 60']
 
   containers:
     - image: "{{ .Values.image.controller }}:{{ .Values.image.tag }}"
       imagePullPolicy: {{ .Values.image.pullPolicy }}
-      name: {{ .Chart.Name }}
+      name: {{ .Values.name }}-controller
       args: {{- printf " [" -}}
 
             {{- printf "\"--test-scenario-file=/opt/mongoose/scenario.json\"" -}}
