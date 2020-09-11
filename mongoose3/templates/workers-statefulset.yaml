@@ -33,7 +33,6 @@ spec:
         - image: "{{ .Values.image.worker }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           name: {{ .Values.name }}
-          args: ["--run-node"]
 
           {{- with .Values.resources }}
           resources:
