@@ -15,7 +15,10 @@ spec:
   selector:
     matchLabels:
       app: {{ .Chart.Name }}
-    name:
-    - {{ .Values.name }}-worker
-    - {{ .Values.name }}-controller
-    - {{ .Values.name }}
+    matchExpressions:
+      - key:      "name"
+        operator: In
+        values:
+          - {{ quote .Values.name }}
+          - "{{ .Values.name }}-controller"
+          - "{{ .Values.name }}-worker"
