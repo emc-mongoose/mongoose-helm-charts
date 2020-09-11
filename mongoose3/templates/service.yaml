@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.service.name }}
+  labels:
+    app: {{ .Chart.Name }}
+spec:
+  {{- if .Values.serviceAccount }}
+  serviceAccountName: {{ .Values.serviceAccount }}
+  {{- end }}
+  ports:
+    - name: data
+      port: 1099
+      targetPort: 1099
+  selector:
+    name: {{ .Values.name }}

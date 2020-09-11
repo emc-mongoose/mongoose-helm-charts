@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Chart.Name }}-scenario-cm
+data:
+  scenario.js: |
+    {{ .Values.scenario }}

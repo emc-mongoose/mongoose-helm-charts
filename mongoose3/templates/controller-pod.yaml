@@ -1,0 +1,66 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: {{ .Chart.Name }}
+spec:
+  {{- if .Values.serviceAccount }}
+  serviceAccountName: {{ .Values.serviceAccount }}
+  {{- end }}
+
+  volumes:
+  - name: scenario-volume
+    configMap:
+      name: {{ .Chart.Name }}-scenario-cm
+
+  initContainers:
+  - name: wait-for-services
+    image: busybox:1.28
+    command: ['sh',
+              '-c',
+              '{{ template "mongoose.makeShellCommand" . }}'
+             ]
+
+  containers:
+    - image: "{{ .Values.image.controller }}:{{ .Values.image.tag }}"
+      imagePullPolicy: {{ .Values.image.pullPolicy }}
+      name: {{ .Chart.Name }}
+      args: {{- printf " [" -}}
+                  
+            {{- $nodeCount := ((add (.Values.replicas|int) -1)|int) -}}
+            {{- if gt $nodeCount 0 -}}
+              {{- printf "\"--load-step-node-addrs=" -}}
+              {{- range $index, $e := until $nodeCount -}}
+                {{- printf "%s-%d.%s" $.Values.name $index $.Values.service.name -}}
+                {{ if ne (add $e 1) $nodeCount }}
+                  {{- printf "," -}}
+                {{ end }}
+              {{- end -}}
+              {{- printf "\"," -}}
+            {{- end -}}
+
+            {{- printf "\"--run-scenario=/opt/mongoose/scenario.js\"" -}}
+            
+            {{ if (ne $.Values.args "") and (ne $.Values.args nil) }}
+              {{- printf "," }}
+              {{- .Values.args -}}
+            {{ end }}
+            
+            {{- printf "]" }}
+
+
+      volumeMounts:
+      - name: scenario-volume
+        mountPath: /opt/mongoose/scenario.js
+        subPath: scenario.js
+
+      {{- with .Values.resources }}
+      resources:
+        limits:
+          cpu: {{ quote .limits.cpu }}
+          memory: {{ quote .limits.memory }}
+        requests:
+          cpu: {{ quote .requests.cpu }}
+          memory: {{ quote .requests.memory }}
+      {{- end }}
+
+  restartPolicy: OnFailure
