@@ -25,20 +25,8 @@ spec:
       imagePullPolicy: {{ .Values.image.pullPolicy }}
       name: {{ .Chart.Name }}
       args: {{- printf " [" -}}
-                  
-            {{- $nodeCount := ((add (.Values.replicas|int) -1)|int) -}}
-            {{- if gt $nodeCount 0 -}}
-              {{- printf "\"--load-step-node-addrs=" -}}
-              {{- range $index, $e := until $nodeCount -}}
-                {{- printf "%s-%d.%s" $.Values.name $index $.Values.service.name -}}
-                {{ if ne (add $e 1) $nodeCount }}
-                  {{- printf "," -}}
-                {{ end }}
-              {{- end -}}
-              {{- printf "\"," -}}
-            {{- end -}}
 
-            {{- printf "\"--run-scenario=/opt/mongoose/scenario.js\"" -}}
+            {{- printf "\"--test-scenario-file=/opt/mongoose/scenario.json\"" -}}
             
             {{ if (ne $.Values.args "") and (ne $.Values.args nil) }}
               {{- printf "," }}
@@ -50,8 +38,8 @@ spec:
 
       volumeMounts:
       - name: scenario-volume
-        mountPath: /opt/mongoose/scenario.js
-        subPath: scenario.js
+        mountPath: /opt/mongoose/scenario.json
+        subPath: scenario.json
 
       {{- with .Values.resources }}
       resources:

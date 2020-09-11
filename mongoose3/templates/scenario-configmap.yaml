@@ -3,5 +3,5 @@ kind: ConfigMap
 metadata:
   name: {{ .Chart.Name }}-scenario-cm
 data:
-  scenario.js: |
+  scenario.json: |
     {{ .Values.scenario }}
