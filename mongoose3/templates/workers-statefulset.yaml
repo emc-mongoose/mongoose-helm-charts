@@ -34,8 +34,8 @@ spec:
                     - {{ quote .Values.service.name }}
               topologyKey:    "kubernetes.io/hostname"
       containers:
-        - image: "{{ .Values.image.worker }}:{{ .Values.image.tag }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+        - image: "{{ .Values.worker.image }}:{{ .Values.worker.tag }}"
+          imagePullPolicy: {{ .Values.worker.pullPolicy }}
           name: {{ .Values.name }}-worker
 
           {{- with .Values.resources }}

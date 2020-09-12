@@ -20,8 +20,8 @@ spec:
     command: ['sh','-c','sleep 60']
 
   containers:
-    - image: "{{ .Values.image.controller }}:{{ .Values.image.tag }}"
-      imagePullPolicy: {{ .Values.image.pullPolicy }}
+    - image: "{{ .Values.controller.image }}:{{ .Values.controller.tag }}"
+      imagePullPolicy: {{ .Values.controller.pullPolicy }}
       name: {{ .Values.name }}-controller
       args: {{- printf " [" -}}
 

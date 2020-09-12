@@ -9,10 +9,14 @@ replicas: 1
 
 #### The mongoose image configuration
 
-image:
-  controller: emcmongoose/mongoose
-  worker: emcmongoose/mongoose-storage-driver-service
+controller:
+  image: emcmongoose/mongoose
   tag: "3.6.2"
+  pullPolicy: Always
+
+worker:
+  image: emcmongoose/mongoose-storage-driver-service-s3
+  tag: "latest"
   pullPolicy: Always
 
 ## <name>-controller
