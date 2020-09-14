@@ -26,10 +26,37 @@ spec:
       args: {{- printf " [" -}}
 
             {{- printf "\"--test-scenario-file=/opt/mongoose/scenario\"" -}}
-            
+
+            # Mongoose CLI args substitution
+
             {{ if (ne $.Values.args "") and (ne $.Values.args nil) }}
-              {{- printf "," }}
-              {{- .Values.args -}}
+                {{- printf "," }}
+                {{- .Values.args -}}
+            {{ end }}
+
+            {{ if (ne $.Values.storage-driver-addrs "") and (ne $.Values.storage-driver-addrs nil) }}
+                {{- printf "," }}
+                {{- "\"--storage-driver-addrs=.Values.storage-driver-addrs\"" -}}
+            {{ end }}
+
+            {{ if (ne $.Values.storage-net-node-addrs "") and (ne $.Values.storage-net-node-addrs nil) }}
+                {{- printf "," }}
+                {{- "\"--storage-net-node-addrs=.Values.storage-net-node-addrs\"" -}}
+            {{ end }}
+
+            {{ if (ne $.Values.storage-auth-uid "") and (ne $.Values.storage-auth-uid nil) }}
+                {{- printf "," }}
+                {{- "\"--storage-auth-uid=.Values.storage-auth-uid\"" -}}
+            {{ end }}
+
+            {{ if (ne $.Values.storage-auth-secret "") and (ne $.Values.storage-auth-secret nil) }}
+                {{- printf "," }}
+                {{- "\"--storage-auth-secret=.Values.storage-auth-secret\"" -}}
+            {{ end }}
+
+            {{ if (ne $.Values.storage-net-node-port "") and (ne $.Values.storage-net-node-port nil) }}
+                {{- printf "," }}
+                {{- "\"--storage-net-node-port=.Values.storage-net-node-port\"" -}}
             {{ end }}
             
             {{- printf "]" }}
