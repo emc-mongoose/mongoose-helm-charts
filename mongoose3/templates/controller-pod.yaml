@@ -17,10 +17,7 @@ spec:
   initContainers:
   - name: sleep
     image: busybox:1.28
-    command: ['sh',
-              '-c',
-              '{{ template "mongoose.makeShellCommand" . }}'
-    ]
+    command: ['sh','-c','sleep 60']
 
   containers:
     - image: "{{ .Values.controller.image }}:{{ .Values.controller.tag }}"
