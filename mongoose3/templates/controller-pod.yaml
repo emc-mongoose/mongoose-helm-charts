@@ -34,27 +34,27 @@ spec:
 
             {{ if (ne $.Values.storage.driver.addrs "") and (ne $.Values.storage.driver.addrs nil) }}
                 {{- printf "," }}
-                {{- "\"--storage-driver-remote\",\"--storage-driver-addrs="$.Values.storage.driver.addrs"\"" -}}
+                {{- "\"--storage-driver-remote\",\"--storage-driver-addrs=%s\"" $.Values.storage.driver.addrs -}}
             {{ end }}
 
             {{ if (ne $.Values.storage.net.node.addrs "") and (ne $.Values.storage.net.node.addrs nil) }}
                 {{- printf "," }}
-                {{- "\"--storage-net-node-addrs="$.Values.storage.net.node.addrs"\"" -}}
+                {{- "\"--storage-net-node-addrs=%s\"" $.Values.storage.net.node.addrs -}}
             {{ end }}
 
             {{ if (ne $.Values.storage.auth.uid "") and (ne $.Values.storage.auth.uid nil) }}
                 {{- printf "," }}
-                {{- "\"--storage-auth-uid="$.Values.storage.auth.uid"\"" -}}
+                {{- "\"--storage-auth-uid=%s\"" $.Values.storage.auth.uid -}}
             {{ end }}
 
             {{ if (ne $.Values.storage.auth.secret "") and (ne $.Values.storage.auth.secret nil) }}
                 {{- printf "," }}
-                {{- "\"--storage-auth-secret="$.Values.storage.auth.secret"\"" -}}
+                {{- "\"--storage-auth-secret=%s\"" $.Values.storage.auth.secret -}}
             {{ end }}
 
             {{ if (ne (quote $.Values.storage.net.node.port) "") and (ne $.Values.storage.net.node.port nil) }}
                 {{- printf "," }}
-                {{- "\"--storage-net-node-port="$.Values.storage.net.node.port"\"" -}}
+                {{- "\"--storage-net-node-port=%s\"" $.Values.storage.net.node.port -}}
             {{ end }}
             
             {{- printf "]" }}
