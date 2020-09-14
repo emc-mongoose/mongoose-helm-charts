@@ -9,20 +9,6 @@ spec:
   serviceAccountName: {{ .Values.serviceAccount }}
   {{- end }}
 
-  affinity:
-    podAntiAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        - labelSelector:
-            matchExpressions:
-              - key: "name"
-                operator: In
-                values:
-                  - {{ quote .Values.name }}
-                  - "{{ .Values.name }}-controller"
-                  - "{{ .Values.name }}-worker"
-                  - {{ quote .Values.service.name }}
-          topologyKey:    "kubernetes.io/hostname"
-
   volumes:
   - name: scenario-volume
     configMap:
