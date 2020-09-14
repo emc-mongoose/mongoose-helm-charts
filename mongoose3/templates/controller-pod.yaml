@@ -27,11 +27,6 @@ spec:
 
             {{- printf "\"--test-scenario-file=/opt/mongoose/scenario\"" -}}
 
-            {{ if (ne $.Values.args "") and (ne $.Values.args nil) }}
-                {{- printf "," }}
-                {{- .Values.args -}}
-            {{ end }}
-
             {{ if (ne $.Values.storage.driver.addrs "") and (ne $.Values.storage.driver.addrs nil) }}
                 {{- printf ",\"--storage-driver-remote\",\"--storage-driver-addrs=%s\"" $.Values.storage.driver.addrs -}}
             {{ end }}
@@ -49,7 +44,12 @@ spec:
             {{ end }}
 
             {{ if (ne (quote $.Values.storage.net.node.port) "") and (ne $.Values.storage.net.node.port nil) }}
-                {{- printf ",\"--storage-net-node-port=%s\"" $.Values.storage.net.node.port -}}
+                {{- printf ",\"--storage-net-node-port=%d\"" $.Values.storage.net.node.port -}}
+            {{ end }}
+
+            {{ if (ne $.Values.args "") and (ne $.Values.args nil) }}
+                {{- printf "," }}
+                {{- .Values.args -}}
             {{ end }}
             
             {{- printf "]" }}
