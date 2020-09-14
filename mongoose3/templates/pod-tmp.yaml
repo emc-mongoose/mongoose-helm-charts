@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: {{ .Values.name }}-controller
+  name: {{ .Values.name }}-tmp
   labels:
     app: {{ .Chart.Name }}
 spec:
