@@ -5,10 +5,23 @@ metadata:
   labels:
     app: {{ .Chart.Name }}
 spec:
-  serviceName: {{ .Values.service.name }}
   {{- if .Values.serviceAccount }}
   serviceAccountName: {{ .Values.serviceAccount }}
   {{- end }}
+
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchExpressions:
+              - key: "name"
+                operator: In
+                values:
+                  - {{ quote .Values.name }}
+                  - "{{ .Values.name }}-controller"
+                  - "{{ .Values.name }}-worker"
+                  - {{ quote .Values.service.name }}
+          topologyKey:    "kubernetes.io/hostname"
 
   volumes:
   - name: scenario-volume
@@ -35,6 +48,8 @@ spec:
             
             {{- printf "]" }}
 
+      ports:
+      - containerPort: 1099
 
       volumeMounts:
       - name: scenario-volume
