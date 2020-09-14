@@ -5,6 +5,7 @@ metadata:
   labels:
     app: {{ .Chart.Name }}
 spec:
+  serviceName: {{ .Values.service.name }}
   {{- if .Values.serviceAccount }}
   serviceAccountName: {{ .Values.serviceAccount }}
   {{- end }}
