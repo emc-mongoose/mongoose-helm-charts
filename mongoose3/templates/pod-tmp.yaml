@@ -28,11 +28,6 @@ spec:
     configMap:
       name: {{ .Values.name }}-scenario-cm
 
-  initContainers:
-  - name: sleep
-    image: busybox:1.28
-    command: ['sh','-c','sleep 60']
-
   containers:
     - image: busybox:1.28
       name: {{ .Values.name }}-tmp
