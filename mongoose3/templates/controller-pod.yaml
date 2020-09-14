@@ -26,14 +26,14 @@ spec:
       args: {{- printf " [" -}}
 
             {{- $nodeCount := (.Values.replicas|int) -}}
-              {{- printf "\"--storage-driver-remote\",\"--storage-driver-addrs=" -}}
-                  {{- range $index, $e := until $nodeCount -}}
-                      {{- printf "%s-worker-%d.%s.%s.svc.cluster.local" $.Values.name $index $.Values.service.name $.Release.Namespace -}}
-                      {{ if ne (add $e 1) $nodeCount }}
-                          {{- printf "," -}}
-                      {{ end }}
-              {{- printf "\"" }}
-            {{- end -}}
+            {{- printf "\"--storage-driver-remote\",\"--storage-driver-addrs=" -}}
+                {{- range $index, $e := until $nodeCount -}}
+                    {{- printf "%s-worker-%d.%s.%s.svc.cluster.local" $.Values.name $index $.Values.service.name $.Release.Namespace -}}
+                    {{ if ne (add $e 1) $nodeCount }}
+                        {{- printf "," -}}
+                    {{ end }}
+                {{- end -}}
+            {{- printf "\"" }}
 
             {{- printf ",\"--test-scenario-file=/opt/mongoose/scenario\"" }}
 
