@@ -2,8 +2,7 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: {{ .Values.name }}-controller
-  labels:
-    app: {{ .Chart.Name }}
+
 spec:
   {{- if .Values.serviceAccount }}
   serviceAccountName: {{ .Values.serviceAccount }}
