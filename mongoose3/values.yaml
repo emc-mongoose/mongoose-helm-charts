@@ -43,8 +43,6 @@ serviceAccount : ""
 args: ""
 
 storage:
-  driver:
-    addrs : ""
   net:
     node:
       addrs: ""

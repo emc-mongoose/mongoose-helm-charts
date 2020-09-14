@@ -25,11 +25,17 @@ spec:
       name: {{ .Values.name }}-controller
       args: {{- printf " [" -}}
 
-            {{- printf "\"--test-scenario-file=/opt/mongoose/scenario\"" }}
+            {{- $nodeCount := (.Values.replicas|int) -}}
+              {{- printf "\"--storage-driver-remote\",\"--storage-driver-addrs=" -}}
+                  {{- range $index, $e := until $nodeCount -}}
+                  {{- printf "%s-worker-%d.%s.%s.svc.cluster.local" $.Values.pod.name $index $.Values.service.name $.Release.Namespace -}}
+                  {{ if ne (add $e 1) $nodeCount }}
+                  {{- printf "," -}}
+                {{ end }}
+              {{- printf "\"" -}}
+            {{- end -}}
 
-            {{ if (ne $.Values.storage.driver.addrs "") and (ne $.Values.storage.driver.addrs nil) }}
-                {{- printf ",\"--storage-driver-remote\",\"--storage-driver-addrs=%s\"" $.Values.storage.driver.addrs -}}
-            {{ end }}
+            {{- printf ",\"--test-scenario-file=/opt/mongoose/scenario\"" }}
 
             {{ if (ne $.Values.storage.net.node.addrs "") and (ne $.Values.storage.net.node.addrs nil) }}
                 {{- printf ",\"--storage-net-node-addrs=%s\"" $.Values.storage.net.node.addrs -}}
