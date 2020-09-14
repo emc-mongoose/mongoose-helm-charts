@@ -32,7 +32,7 @@ spec:
                   {{ if ne (add $e 1) $nodeCount }}
                   {{- printf "," -}}
                 {{ end }}
-              {{- printf "\"" -}}
+              {{- printf "\"" }}
             {{- end -}}
 
             {{- printf ",\"--test-scenario-file=/opt/mongoose/scenario\"" }}
