@@ -42,11 +42,11 @@ serviceAccount : ""
 
 args: ""
 
-storage-driver-addrs : ""
-storage-net-node-addrs: ""
-storage-auth-uid: ""
-storage-auth-secret: ""
-storage-net-node-port: ""
+storage.driver.addrs : ""
+storage.net.node.addrs: ""
+storage.auth.uid: ""
+storage.auth.secret: ""
+storage.net.node.port: ""
 
 ########### Mongoose scenario (js or json) ############
 
