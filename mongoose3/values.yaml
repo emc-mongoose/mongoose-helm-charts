@@ -20,7 +20,7 @@ worker:
   pullPolicy: Always
 
 ## <name>-controller
-## <name>-worker
+## <name>-worker-<n>
 
 name: mongoose3
 
@@ -38,7 +38,6 @@ resources:
 
 serviceAccount : ""
 
-
 ################## Mongoose CLI args ##################
 
 args: ""
@@ -46,6 +45,3 @@ args: ""
 ########### Mongoose scenario (js or json) ############
 
 scenario: 'Load.run();'
-
-
-
