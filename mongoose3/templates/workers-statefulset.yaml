@@ -17,7 +17,9 @@ spec:
 
   template:
     metadata:
-      name: {{ .Values.name }}-worker
+      labels:
+        name: {{ .Values.name }}-worker
+        app: {{ .Chart.Name }}
     spec:
       affinity:
         podAntiAffinity:
