@@ -28,10 +28,10 @@ spec:
             {{- $nodeCount := (.Values.replicas|int) -}}
               {{- printf "\"--storage-driver-remote\",\"--storage-driver-addrs=" -}}
                   {{- range $index, $e := until $nodeCount -}}
-                  {{- printf "%s-worker-%d.%s.%s.svc.cluster.local" $.Values.name $index $.Values.service.name $.Release.Namespace -}}
-                  {{ if ne (add $e 1) $nodeCount }}
-                  {{- printf "," -}}
-                {{ end }}
+                      {{- printf "%s-worker-%d.%s.%s.svc.cluster.local" $.Values.name $index $.Values.service.name $.Release.Namespace -}}
+                      {{ if ne (add $e 1) $nodeCount }}
+                          {{- printf "," -}}
+                      {{ end }}
               {{- printf "\"" }}
             {{- end -}}
 
