@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Values.name }}-worker
+  labels:
+    app: {{ .Chart.Name }}
+spec:
+  {{- if .Values.serviceAccount }}
+  serviceAccountName: {{ .Values.serviceAccount }}
+  {{- end }}
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels:
+      name: {{ .Values.name }}-worker
+  serviceName: {{ .Values.service.name }}
+  podManagementPolicy: Parallel
+
+  template:
+    metadata:
+      labels:
+        name: {{ .Values.name }}-worker
+        app: {{ .Chart.Name }}
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key:      "name"
+                    operator: In
+                    values:
+                    - {{ quote .Values.name }}
+                    - "{{ .Values.name }}-controller"
+                    - "{{ .Values.name }}-worker"
+                    - {{ quote .Values.service.name }}
+              topologyKey:    "kubernetes.io/hostname"
+      containers:
+        - image: "{{ .Values.worker.image }}:{{ .Values.worker.tag }}"
+          imagePullPolicy: {{ .Values.worker.pullPolicy }}
+          name: {{ .Values.name }}-worker
+
+          {{- with .Values.resources }}
+          resources:
+            limits:
+              cpu: {{ quote .limits.cpu }}
+              memory: {{ quote .limits.memory }}
+            requests:
+              cpu: {{ quote .requests.cpu }}
+              memory: {{ quote .requests.memory }}
+          {{- end }}
+
+          ports:
+          - containerPort: 1099

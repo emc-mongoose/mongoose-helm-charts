@@ -1,0 +1,81 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: {{ .Values.name }}-controller
+  labels:
+    app: {{ .Chart.Name }}
+spec:
+  {{- if .Values.serviceAccount }}
+  serviceAccountName: {{ .Values.serviceAccount }}
+  {{- end }}
+
+  volumes:
+  - name: scenario-volume
+    configMap:
+      name: {{ .Values.name }}-scenario-cm
+
+  initContainers:
+  - name: sleep
+    image: busybox:1.28
+    command: ['sh','-c','sleep 60']
+
+  containers:
+    - image: "{{ .Values.controller.image }}:{{ .Values.controller.tag }}"
+      imagePullPolicy: {{ .Values.controller.pullPolicy }}
+      name: {{ .Values.name }}-controller
+      args: {{- printf " [" -}}
+
+            {{- $nodeCount := (.Values.replicas|int) -}}
+            {{- printf "\"--storage-driver-remote\",\"--storage-driver-addrs=" -}}
+                {{- range $index, $e := until $nodeCount -}}
+                    {{- printf "%s-worker-%d.%s.%s.svc.cluster.local" $.Values.name $index $.Values.service.name $.Release.Namespace -}}
+                    {{ if ne (add $e 1) $nodeCount }}
+                        {{- printf "," -}}
+                    {{ end }}
+                {{- end -}}
+            {{- printf "\"" }}
+
+            {{- printf ",\"--test-scenario-file=/opt/mongoose/scenario\"" }}
+
+            {{ if (ne $.Values.storage.net.node.addrs "") and (ne $.Values.storage.net.node.addrs nil) }}
+                {{- printf ",\"--storage-net-node-addrs=%s\"" $.Values.storage.net.node.addrs -}}
+            {{ end }}
+
+            {{ if (ne $.Values.storage.auth.uid "") and (ne $.Values.storage.auth.uid nil) }}
+                {{- printf ",\"--storage-auth-uid=%s\"" $.Values.storage.auth.uid -}}
+            {{ end }}
+
+            {{ if (ne $.Values.storage.auth.secret "") and (ne $.Values.storage.auth.secret nil) }}
+                {{- printf ",\"--storage-auth-secret=%s\"" $.Values.storage.auth.secret -}}
+            {{ end }}
+
+            {{ if (ne (quote $.Values.storage.net.node.port) "") and (ne $.Values.storage.net.node.port nil) }}
+                {{- printf ",\"--storage-net-node-port=%d\"" $.Values.storage.net.node.port -}}
+            {{ end }}
+
+            {{ if (ne $.Values.args "") and (ne $.Values.args nil) }}
+                {{- printf "," }}
+                {{- .Values.args -}}
+            {{ end }}
+            
+            {{- printf "]" }}
+
+      ports:
+      - containerPort: 1099
+
+      volumeMounts:
+      - name: scenario-volume
+        mountPath: /opt/mongoose/scenario
+        subPath: scenario
+
+      {{- with .Values.resources }}
+      resources:
+        limits:
+          cpu: {{ quote .limits.cpu }}
+          memory: {{ quote .limits.memory }}
+        requests:
+          cpu: {{ quote .requests.cpu }}
+          memory: {{ quote .requests.memory }}
+      {{- end }}
+
+  restartPolicy: OnFailure

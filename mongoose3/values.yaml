@@ -1,0 +1,56 @@
+
+########################################################
+#### Default values for demo-chart.
+########################################################
+
+#### Number of Mongoose workers to deploy (1 controller + [n >= 1] workers)
+
+replicas: 1
+
+#### The mongoose image configuration
+
+controller:
+  image: emcmongoose/mongoose
+  tag: "3.6.2"
+  pullPolicy: Always
+
+worker:
+  image: emcmongoose/mongoose-storage-driver-service-s3
+  tag: "latest"
+  pullPolicy: Always
+
+## <name>-controller
+## <name>-worker-<n>
+
+name: mongoose3
+
+service:
+  name: mongoose3-svc
+  type: LoadBalancer
+
+resources:
+  limits:
+    cpu: "4"
+    memory: "4Gi"
+  requests:
+    cpu: "4"
+    memory: "4Gi"
+
+serviceAccount : ""
+
+################## Mongoose CLI args ##################
+
+args: ""
+
+storage:
+  net:
+    node:
+      addrs: ""
+      port: ""
+  auth:
+    uid: ""
+    secret: ""
+
+########### Mongoose scenario (js or json) ############
+
+scenario: 'Load.run();'
