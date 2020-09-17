@@ -30,9 +30,9 @@ spec:
               topologyKey:    "kubernetes.io/hostname"
 
       volumes:
-        - name: {{ .Values.pod.name }}-logs
+        - name: {{ .Chart.Name }}-logs
           persistentVolumeClaim:
-              claimName: {{ .Values.pod.name }}-logs-pvc
+              claimName: {{ .Chart.Name }}-logs-pvc
 
       containers:
       - image: "{{ .Values.image.name }}:{{ .Values.image.tag }}"
@@ -40,7 +40,7 @@ spec:
         name: {{ .Values.pod.name }}
         volumeMounts:
           - mountPath: "/root/.mongoose/"
-            name: {{ .Values.pod.name }}-logs
+            name: {{ .Chart.Name }}-logs
 
         {{- with .Values.resources }}
         resources:

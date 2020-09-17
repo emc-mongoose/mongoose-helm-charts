@@ -14,6 +14,14 @@ spec:
     configMap:
       name: {{ .Values.name }}-scenario-cm
 
+  - name: logs-volume
+    persistentVolumeClaim:
+      claimName: {{ .Values.name }}-pvc
+
+#  - name: result-volume
+#    persistentVolumeClaim:
+#      claimName: {{ .Values.name }}-pvc
+
   initContainers:
   - name: sleep
     image: busybox:1.28
@@ -63,10 +71,17 @@ spec:
       ports:
       - containerPort: 1099
 
+
       volumeMounts:
-      - name: scenario-volume
-        mountPath: /opt/mongoose/scenario
-        subPath: scenario
+      - mountPath: "/opt/mongoose/scenario"
+        name: scenario-volume
+        subPath: "scenario"
+      - mountPath: "/root/.mongoose/"
+        name: logs-volume
+      - mountPath: "/opt/mongoose/"
+        name: logs-volume
+        subPath: "result.xml"
+
 
       {{- with .Values.resources }}
       resources:

@@ -11,6 +11,9 @@ spec:
   - name: scenario-volume
     configMap:
       name: {{ .Chart.Name }}-scenario-cm
+  - name: logs-volume
+    persistentVolumeClaim:
+      claimName: {{ .Chart.Name }}-logs-pvc
 
   initContainers:
   - name: wait-for-services
@@ -58,6 +61,8 @@ spec:
       - name: scenario-volume
         mountPath: /opt/mongoose/scenario.js
         subPath: scenario.js
+      - mountPath: "/root/.mongoose/"
+        name: logs-volume
 
       {{- with .Values.resources }}
       resources:

@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{ .Chart.Name }}-logs-pvc
+  name:{{ .Chart.Name }}-logs-pvc
 spec:
   storageClassName: {{ .Values.logs.storageClassName }}
   accessModes:
