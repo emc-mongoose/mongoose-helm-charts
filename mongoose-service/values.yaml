@@ -35,7 +35,7 @@ serviceAccount: ""
 debug: false
 
 logs:
-  storageClassName: "default"
+  storageClassName: "standard"
 
 ################## Mongoose CLI args ##################
 
