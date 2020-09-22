@@ -73,14 +73,14 @@ spec:
 
 
       volumeMounts:
-      - mountPath: "/opt/mongoose/scenario"
-        name: scenario-volume
+      - name: scenario-volume
+        mountPath: "/opt/mongoose/scenario"
         subPath: "scenario"
-      - mountPath: "/root/.mongoose/"
-        name: logs-volume
-      - mountPath: "/opt/mongoose/result.xml"
-        name: logs-volume
-        subPath: "result.xml"
+#      - name: logs-volume
+#        mountPath: "/root/.mongoose/"
+#      - name: logs-volume
+#        mountPath: "/opt/mongoose/result.xml"
+#        subPath: "result.xml"
 
 
       {{- with .Values.resources }}
