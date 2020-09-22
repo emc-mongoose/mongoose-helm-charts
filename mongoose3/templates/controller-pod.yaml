@@ -45,27 +45,27 @@ spec:
 
             {{- printf ",\"--test-scenario-file=/opt/mongoose/scenario.js\"" }}
 
-            {{ if (ne $.Values.storage.net.node.addrs "") and (ne $.Values.storage.net.node.addrs nil) }}
+            {{ if $.Values.storage.net.node.addrs }}
                 {{- printf ",\"--storage-net-node-addrs=%s\"" $.Values.storage.net.node.addrs -}}
             {{ end }}
 
-            {{ if (ne $.Values.storage.auth.uid "") and (ne $.Values.storage.auth.uid nil) }}
+            {{ if $.Values.storage.auth.uid }}
                 {{- printf ",\"--storage-auth-uid=%s\"" $.Values.storage.auth.uid -}}
             {{ end }}
 
-            {{ if (ne $.Values.storage.auth.secret "") and (ne $.Values.storage.auth.secret nil) }}
+            {{ if $.Values.storage.auth.secret }}
                 {{- printf ",\"--storage-auth-secret=%s\"" $.Values.storage.auth.secret -}}
             {{ end }}
 
-            {{ if (ne (quote $.Values.storage.net.node.port) "") and (ne $.Values.storage.net.node.port nil) }}
+            {{ if $.Values.storage.net.node.port }}
                 {{- printf ",\"--storage-net-node-port=%d\"" $.Values.storage.net.node.port -}}
             {{ end }}
 
-            {{ if (ne $.Values.storage.driver.type "") and (ne $.Values.driver.type nil) }}
+            {{ if $.Values.storage.driver.type }}
                 {{- printf ",\"--storage-driver-type=%s\"" $.Values.storage.driver.type -}}
             {{ end }}
 
-            {{ if (ne $.Values.args "") and (ne $.Values.args nil) }}
+            {{ if $.Values.args }}
                 {{- printf "," }}
                 {{- .Values.args -}}
             {{ end }}
