@@ -88,7 +88,7 @@ spec:
         mountPath: "/root/.mongoose/"
       - name: logs-volume
         mountPath: "/opt/mongoose/result.xml"
-        subPath: "result.xml"
+        subPath: result.xml
       {{- end }}
 
       {{- with .Values.resources }}
