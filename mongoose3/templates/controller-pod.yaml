@@ -14,9 +14,11 @@ spec:
     configMap:
       name: {{ .Values.name }}-scenario-cm
 
+  {{- if .Values.logs.storageClassName }}
   - name: logs-volume
     persistentVolumeClaim:
       claimName: {{ .Values.name }}-pvc
+  {{- end }}
 
 #  - name: result-volume
 #    persistentVolumeClaim:
@@ -80,12 +82,14 @@ spec:
       - name: scenario-volume
         mountPath: "/opt/mongoose/scenario.js"
         subPath: "scenario.js"
+
+      {{- if .Values.logs.storageClassName }}
       - name: logs-volume
         mountPath: "/root/.mongoose/"
       - name: logs-volume
         mountPath: "/opt/mongoose/result.xml"
         subPath: "result.xml"
-
+      {{- end }}
 
       {{- with .Values.resources }}
       resources:
