@@ -81,7 +81,7 @@ spec:
       volumeMounts:
       - name: scenario-volume
         mountPath: "/opt/mongoose/scenario.js"
-        subPath: "scenario.js"
+        subPath: scenario.js
 
       {{- if .Values.logs.storageClassName }}
       - name: logs-volume
