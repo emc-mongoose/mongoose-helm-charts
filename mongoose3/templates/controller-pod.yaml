@@ -61,6 +61,10 @@ spec:
                 {{- printf ",\"--storage-net-node-port=%d\"" $.Values.storage.net.node.port -}}
             {{ end }}
 
+            {{ if (ne $.Values.storage.driver.type "") and (ne $.Values.driver.type nil) }}
+                {{- printf ",\"--storage-driver-type=%s\"" $.Values.storage.driver.type -}}
+            {{ end }}
+
             {{ if (ne $.Values.args "") and (ne $.Values.args nil) }}
                 {{- printf "," }}
                 {{- .Values.args -}}
