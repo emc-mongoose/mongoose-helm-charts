@@ -43,7 +43,7 @@ spec:
                 {{- end -}}
             {{- printf "\"" }}
 
-            {{- printf ",\"--test-scenario-file=/opt/mongoose/scenario\"" }}
+            {{- printf ",\"--test-scenario-file=/opt/mongoose/scenario.js\"" }}
 
             {{ if (ne $.Values.storage.net.node.addrs "") and (ne $.Values.storage.net.node.addrs nil) }}
                 {{- printf ",\"--storage-net-node-addrs=%s\"" $.Values.storage.net.node.addrs -}}
@@ -74,13 +74,13 @@ spec:
 
       volumeMounts:
       - name: scenario-volume
-        mountPath: "/opt/mongoose/scenario"
-        subPath: "scenario"
-#      - name: logs-volume
-#        mountPath: "/root/.mongoose/"
-#      - name: logs-volume
-#        mountPath: "/opt/mongoose/result.xml"
-#        subPath: "result.xml"
+        mountPath: "/opt/mongoose/scenario.js"
+        subPath: "scenario.js"
+      - name: logs-volume
+        mountPath: "/root/.mongoose/"
+      - name: logs-volume
+        mountPath: "/opt/mongoose/result.xml"
+        subPath: "result.xml"
 
 
       {{- with .Values.resources }}
