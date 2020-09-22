@@ -39,7 +39,7 @@ resources:
 serviceAccount : ""
 
 logs:
-  storageClassName: "standard"
+  storageClassName: ""
 
 ################## Mongoose CLI args ##################
 
