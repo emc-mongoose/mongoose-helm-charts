@@ -78,7 +78,7 @@ spec:
         subPath: "scenario"
       - mountPath: "/root/.mongoose/"
         name: logs-volume
-      - mountPath: "/opt/mongoose/"
+      - mountPath: "/opt/mongoose/result.xml"
         name: logs-volume
         subPath: "result.xml"
 
