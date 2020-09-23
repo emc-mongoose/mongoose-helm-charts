@@ -2,8 +2,19 @@ apiVersion: v1
 entries:
   mongoose:
   - apiVersion: v1
+    appVersion: 4.2.19
+    created: "2020-09-23T11:32:09.0261065+03:00"
+    description: Mongoose is a horizontally scalable and configurable performance
+      testing utility.
+    digest: 2e39adad0959572fee10733c54f4c32ca6457d076ab0a062eeb3ca5f42974428
+    home: https://github.com/emc-mongoose/mongoose
+    name: mongoose
+    urls:
+    - https://emc-mongoose.github.io/mongoose-helm-charts/mongoose-1.0.0.tgz
+    version: 1.0.0
+  - apiVersion: v1
     appVersion: 4.2.17
-    created: "2020-04-14T01:38:41.4040864+03:00"
+    created: "2020-09-23T11:32:09.0245062+03:00"
     description: Mongoose is a horizontally scalable and configurable performance
       testing utility.
     digest: d4067ee6f0bd299f9da27c456da8b3ef9a1683cbd714d18ee32f828d7cf65f3a
@@ -14,7 +25,7 @@ entries:
     version: 0.1.9
   - apiVersion: v1
     appVersion: 4.2.17
-    created: "2020-04-14T01:38:41.4027157+03:00"
+    created: "2020-09-23T11:32:09.0229442+03:00"
     description: Mongoose is a horizontally scalable and configurable performance
       testing utility.
     digest: 169bfae2d222f48987f1c265304a7af2e506193feaf27d12fada44e53fbc9d13
@@ -25,7 +36,7 @@ entries:
     version: 0.1.8
   - apiVersion: v1
     appVersion: 4.2.15
-    created: "2020-04-14T01:38:41.4012769+03:00"
+    created: "2020-09-23T11:32:09.0213754+03:00"
     description: Mongoose is a horizontally scalable and configurable performance
       testing utility.
     digest: 54476aee51f5da5af97881f5e0acfa8aa0ee7ad2718604b4b4219f28c84100ca
@@ -36,7 +47,7 @@ entries:
     version: 0.1.7
   - apiVersion: v1
     appVersion: 4.2.15
-    created: "2020-04-14T01:38:41.399815+03:00"
+    created: "2020-09-23T11:32:09.0197396+03:00"
     description: Mongoose is a horizontally scalable and configurable performance
       testing utility.
     digest: 8cfbb58f661c1d7abd90313695e924db7a187dfb1c203dbbfd2f1f2b07fcf30a
@@ -47,7 +58,7 @@ entries:
     version: 0.1.6
   - apiVersion: v1
     appVersion: 4.2.15
-    created: "2020-04-14T01:38:41.3982232+03:00"
+    created: "2020-09-23T11:32:09.0181879+03:00"
     description: Mongoose is a horizontally scalable and configurable performance
       testing utility.
     digest: ce68d878d815fe5b9015a5702f5a0b637a086cd6b6e27ef1e3d58e458f4e8cd5
@@ -58,7 +69,7 @@ entries:
     version: 0.1.5
   - apiVersion: v1
     appVersion: 4.2.12
-    created: "2020-04-14T01:38:41.3968059+03:00"
+    created: "2020-09-23T11:32:09.0157596+03:00"
     description: Mongoose is a horizontally scalable and configurable performance
       testing utility.
     digest: 01835c83e9d3bc761d56e2aef48f2c25ba8e61f0b890ab472d60b40ffa0293f3
@@ -69,7 +80,7 @@ entries:
     version: 0.1.4
   - apiVersion: v1
     appVersion: 4.2.12
-    created: "2020-04-14T01:38:41.3953492+03:00"
+    created: "2020-09-23T11:32:09.0135693+03:00"
     description: Mongoose is a horizontally scalable and configurable performance
       testing utility.
     digest: 95c7f23d90956fca4d076e1b28d6795735109945379841cefbe743111fe931f3
@@ -80,7 +91,7 @@ entries:
     version: 0.1.3
   - apiVersion: v1
     appVersion: 4.2.12
-    created: "2020-04-14T01:38:41.3925898+03:00"
+    created: "2020-09-23T11:32:09.0111525+03:00"
     description: Mongoose is a horizontally scalable and configurable performance
       testing utility.
     digest: 589e3d4892615b8add4f74c9eef96960efccbdda68a03937570d6ac5a562fd5f
@@ -91,7 +102,7 @@ entries:
     version: 0.1.2
   - apiVersion: v1
     appVersion: 4.2.12
-    created: "2020-04-14T01:38:41.3911557+03:00"
+    created: "2020-09-23T11:32:09.0091145+03:00"
     description: Mongoose is a horizontally scalable and configurable performance
       testing utility.
     digest: e2ceac15dd485cbb81ab2274e8c26f8f5e6aa02f01b081c893857205eb0fd623
@@ -103,7 +114,7 @@ entries:
   mongoose-pravega:
   - apiVersion: v1
     appVersion: 4.2.17
-    created: "2020-04-14T01:38:41.4055988+03:00"
+    created: "2020-09-23T11:32:09.0277255+03:00"
     description: Mongoose chart with Pravega storage driver and additional specfic
       params.
     digest: e3ddbb4dc22e3739c446353c847b24d0ac6df0e91c4fbbf2eb1fd65f6cdcef05
@@ -114,8 +125,18 @@ entries:
     version: alpha
   mongoose-service:
   - apiVersion: v1
+    appVersion: 4.2.19
+    created: "2020-09-23T11:32:09.0456552+03:00"
+    description: Chart for deploying mongoose-nodes
+    digest: 3c7292b3fa239c04ad19f09b06dcc52f1067d6a346fdeebc86ab46ed8a3ece84
+    home: https://github.com/emc-mongoose/mongoose
+    name: mongoose-service
+    urls:
+    - https://emc-mongoose.github.io/mongoose-helm-charts/mongoose-service-1.0.0.tgz
+    version: 1.0.0
+  - apiVersion: v1
     appVersion: 4.2.18
-    created: "2020-04-14T01:38:41.4085385+03:00"
+    created: "2020-09-23T11:32:09.0309787+03:00"
     description: Chart for deploying mongoose-nodes
     digest: 2477be607e106b7dc76f8254ba8cb756cb582768efb4bc22bc1b903748978534
     home: https://github.com/emc-mongoose/mongoose
@@ -125,7 +146,7 @@ entries:
     version: 0.1.11
   - apiVersion: v1
     appVersion: 4.2.18
-    created: "2020-04-14T01:38:41.4070553+03:00"
+    created: "2020-09-23T11:32:09.0294072+03:00"
     description: Chart for deploying mongoose-nodes
     digest: 4251ca82093529ce2dd01a36965fc8579f57f64a7f45034a9f9747af5a5223e4
     home: https://github.com/emc-mongoose/mongoose
@@ -135,7 +156,7 @@ entries:
     version: 0.1.10
   - apiVersion: v1
     appVersion: 4.2.17
-    created: "2020-04-14T01:38:41.4205347+03:00"
+    created: "2020-09-23T11:32:09.0439881+03:00"
     description: Chart for deploying mongoose-nodes
     digest: 99965f2776bf41de5974cc185be1976618ac924e2256362fabc9fd98d4787acd
     home: https://github.com/emc-mongoose/mongoose
@@ -145,7 +166,7 @@ entries:
     version: 0.1.9
   - apiVersion: v1
     appVersion: 4.2.17
-    created: "2020-04-14T01:38:41.4190672+03:00"
+    created: "2020-09-23T11:32:09.04242+03:00"
     description: Chart for deploying mongoose-nodes
     digest: ae321bf434f7d604c2874f8e6fa460c33cb2b7e1806f88d95053f77e1e62d75b
     home: https://github.com/emc-mongoose/mongoose
@@ -155,7 +176,7 @@ entries:
     version: 0.1.8
   - apiVersion: v1
     appVersion: 4.2.15
-    created: "2020-04-14T01:38:41.4176224+03:00"
+    created: "2020-09-23T11:32:09.0407485+03:00"
     description: Chart for deploying mongoose-nodes
     digest: 0fbd414d22190b4b2fca33508f575c3d870be043a5fd8f2be65297c41d7eabf2
     home: https://github.com/emc-mongoose/mongoose
@@ -165,7 +186,7 @@ entries:
     version: 0.1.7
   - apiVersion: v1
     appVersion: 4.2.15
-    created: "2020-04-14T01:38:41.4161256+03:00"
+    created: "2020-09-23T11:32:09.0390947+03:00"
     description: Chart for deploying mongoose-nodes
     digest: 47de2ed1a3ed6ba6d972fdd11ba6ce58f5fa9cc6122d97af9a48f77ab2597cb6
     home: https://github.com/emc-mongoose/mongoose
@@ -175,7 +196,7 @@ entries:
     version: 0.1.6
   - apiVersion: v1
     appVersion: 4.2.12
-    created: "2020-04-14T01:38:41.4145947+03:00"
+    created: "2020-09-23T11:32:09.0374856+03:00"
     description: Chart for deploying mongoose-nodes
     digest: 040ae1910fb690a5f11a132eb8eb3e3eca15a16c6b6830aa0094aa1e363ba65d
     home: https://github.com/emc-mongoose/mongoose
@@ -185,7 +206,7 @@ entries:
     version: 0.1.5
   - apiVersion: v1
     appVersion: 4.2.12
-    created: "2020-04-14T01:38:41.4131387+03:00"
+    created: "2020-09-23T11:32:09.0358794+03:00"
     description: Chart for deploying mongoose-nodes
     digest: d1587e4e53b6eb58547ebe3352bafd3931d1c2484980aeb8db8b8284c6a33524
     home: https://github.com/emc-mongoose/mongoose
@@ -195,7 +216,7 @@ entries:
     version: 0.1.4
   - apiVersion: v1
     appVersion: 4.2.12
-    created: "2020-04-14T01:38:41.4113241+03:00"
+    created: "2020-09-23T11:32:09.0342274+03:00"
     description: Chart for deploying mongoose-nodes
     digest: d416f8175cd99102d90453cb17b20dca79b885ffbf72e961c230cb13988455e8
     home: https://github.com/emc-mongoose/mongoose
@@ -205,7 +226,7 @@ entries:
     version: 0.1.3
   - apiVersion: v1
     appVersion: 4.2.12
-    created: "2020-04-14T01:38:41.4098858+03:00"
+    created: "2020-09-23T11:32:09.0326226+03:00"
     description: Chart for deploying mongoose-nodes
     digest: b20018aedea21e0087dd07babbfca2adc83ef956079e6545710eb3762a52497a
     home: https://github.com/emc-mongoose/mongoose
@@ -213,4 +234,16 @@ entries:
     urls:
     - https://emc-mongoose.github.io/mongoose-helm-charts/mongoose-service-0.1.2.tgz
     version: 0.1.2
-generated: "2020-04-14T01:38:41.2794582+03:00"
+  mongoose3:
+  - apiVersion: v1
+    appVersion: 3.6.2
+    created: "2020-09-23T11:32:09.0474106+03:00"
+    description: Mongoose is a horizontally scalable and configurable performance
+      testing utility.
+    digest: 23868a663a7e9785430c96a05d1788cef436e29ff6a186bde547aed2843c33aa
+    home: https://github.com/emc-mongoose/mongoose
+    name: mongoose3
+    urls:
+    - https://emc-mongoose.github.io/mongoose-helm-charts/mongoose3-1.0.0.tgz
+    version: 1.0.0
+generated: "2020-09-23T11:32:09.0073797+03:00"
