@@ -20,10 +20,6 @@ spec:
       claimName: {{ .Values.name }}-pvc
   {{- end }}
 
-#  - name: result-volume
-#    persistentVolumeClaim:
-#      claimName: {{ .Values.name }}-pvc
-
   initContainers:
   - name: sleep
     image: busybox:1.28
