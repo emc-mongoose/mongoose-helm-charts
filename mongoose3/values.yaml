@@ -38,11 +38,16 @@ resources:
 
 serviceAccount : ""
 
+logs:
+  storageClassName: ""
+
 ################## Mongoose CLI args ##################
 
 args: ""
 
 storage:
+  driver:
+    type: "s3"
   net:
     node:
       addrs: ""

@@ -1,0 +1,15 @@
+{{- if .Values.logs.storageClassName }}
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Chart.Name }}-pvc
+spec:
+  storageClassName: {{ .Values.logs.storageClassName }}
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 3Gi
+
+{{- end }}
