@@ -29,18 +29,23 @@ spec:
                     - {{ quote .Values.service.name }}
               topologyKey:    "kubernetes.io/hostname"
 
+      {{- if .Values.logs.storageClassName }}
       volumes:
         - name: {{ .Chart.Name }}-logs
           persistentVolumeClaim:
               claimName: {{ .Chart.Name }}-logs-pvc
+      {{- end }}
 
       containers:
       - image: "{{ .Values.image.name }}:{{ .Values.image.tag }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         name: {{ .Values.pod.name }}
+
+        {{- if .Values.logs.storageClassName }}
         volumeMounts:
           - mountPath: "/root/.mongoose/"
             name: {{ .Chart.Name }}-logs
+        {{- end }}
 
         {{- with .Values.resources }}
         resources:
