@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Values.pod.name }}
+spec:
+  {{- $count := ((add (.Values.replicas|int) -1)|int) -}}
+  {{ if lt $count 1}}
+  replicas: 0
+  {{ else }}
+  replicas: {{ $count }}
+  {{ end }}
+  selector:
+    matchLabels:
+      name: {{ .Values.pod.name }}
+  serviceName: {{ .Values.pod.name }}
+  podManagementPolicy: Parallel
+  template:
+    metadata:
+      labels:
+        mongoose-role: additional-node
+        name: {{ .Values.pod.name }}
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key:      "app"
+                    operator: In
+                    values:   [{{ quote .Values.pod.name }}]
+              topologyKey:    "kubernetes.io/hostname"
+      containers:
+        - image: "{{ .Values.image.name }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          name: {{ .Values.pod.name }}
+          args: ["--run-node"]
+
+          {{- with .Values.resources }}
+          resources:
+            limits:
+              cpu: {{ quote .limits.cpu }}
+              memory: {{ quote .limits.memory }}
+            requests:
+              cpu: {{ quote .requests.cpu }}
+              memory: {{ quote .requests.memory }}
+          {{- end }}
+
+          ports:
+          - containerPort: 1099
+          - containerPort: 9999
+          {{ if .Values.debug }}
+          - containerPort: 5005
+          command: ["/opt/mongoose/entrypoint_debug.sh"]
+          {{- end }}

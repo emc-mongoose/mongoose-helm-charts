@@ -1,0 +1,6 @@
+apiVersion: v1
+appVersion: "4.2.17"
+description: Mongoose chart with S3 storage driver and additional specfic params.
+name: mongoose-s3
+version: alpha
+home: https://github.com/emc-mongoose/mongoose-storage-driver-s3
