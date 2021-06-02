@@ -59,7 +59,7 @@ spec:
 
         args: {{- printf " [" -}}
           {{- printf "\"--run-node\"" -}}
-          {{ if (ne $.Values.args "") and (ne $.Values.args nil) }}
+          {{ if and (ne $.Values.args "") (ne $.Values.args nil) }}
             {{- printf "," }}
             {{- .Values.args -}}
           {{ end }}

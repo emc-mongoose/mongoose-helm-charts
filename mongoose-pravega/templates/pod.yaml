@@ -32,7 +32,7 @@ spec:
             {{- end -}}
 
             
-            {{ if (ne $.Values.args "") and (ne $.Values.args nil) }}
+            {{ if and (ne $.Values.args "") (ne $.Values.args nil) }}
               {{- if gt $nodeCount 0 -}}
                 {{- printf "," }}
               {{ end }}
