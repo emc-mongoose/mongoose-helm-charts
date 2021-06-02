@@ -46,7 +46,7 @@ spec:
 
             {{- printf "\"--run-scenario=/opt/mongoose/scenario.js\"" -}}
             
-            {{ if (ne $.Values.args "") and (ne $.Values.args nil) }}
+            {{ if $.Values.args }}
               {{- printf "," }}
               {{- .Values.args -}}
             {{ end }}
